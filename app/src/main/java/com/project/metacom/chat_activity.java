@@ -9,6 +9,8 @@ import android.widget.ExpandableListView;
 import android.widget.RelativeLayout;
 import androidx.annotation.Nullable;
 
+import java.io.IOException;
+
 public class chat_activity extends Activity {
 
     @Override
@@ -21,12 +23,14 @@ public class chat_activity extends Activity {
        // RelativeLayout layout= (RelativeLayout) findViewById(R.id.rl);
        // layout.addView(cv);
 
-        //adapter
+
         DataAdapter data_adapter = new DataAdapter(this);
+        DataRceveiver data_receiver = new DataRceveiver("http://109.196.164.38",data_adapter);
+        try { data_receiver.Top_chart_execute();  } catch (IOException e) {   e.printStackTrace();   }
 
         //target
         ExpandableListView data_target = (ExpandableListView) findViewById(R.id.expListView);
-        data_target.setAdapter(data_adapter);
+        data_target.setAdapter(data_receiver.data_adapter);
     }
 
     class chat_view extends View {

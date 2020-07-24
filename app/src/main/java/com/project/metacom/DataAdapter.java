@@ -11,14 +11,16 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import com.neovisionaries.ws.client.*;
+
 public class DataAdapter extends BaseExpandableListAdapter {
     private Context context;
-    private List<String> listGroup;
-    private HashMap<String, List<String>> listChild;
+    public List<String> listGroup = new ArrayList<String>();
+    public HashMap<String, List<String>> listChild  = new HashMap<String, List<String>>();
 
     public DataAdapter(Context context) {
         this.context = context;
-        this.initData();
+        //this.initData();
     }
 
     @Override
@@ -106,8 +108,8 @@ public class DataAdapter extends BaseExpandableListAdapter {
     }
 
     private void initData() {
-        listGroup = new ArrayList<String>();
-        listChild = new HashMap<String, List<String>>();
+        //listGroup = new ArrayList<String>();
+        //listChild = new HashMap<String, List<String>>();
 
         listGroup.add("Васька");
         listGroup.add("Барсик");
