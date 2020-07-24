@@ -25,12 +25,11 @@ public class chat_activity extends Activity {
 
 
         DataAdapter data_adapter = new DataAdapter(this);
-        DataRceveiver data_receiver = new DataRceveiver("http://109.196.164.38",data_adapter);
+        ExpandableListView data_target = (ExpandableListView) findViewById(R.id.expListView);
+
+        DataRceveiver data_receiver = new DataRceveiver("http://109.196.164.38",data_adapter, data_target);
         try { data_receiver.Top_chart_execute();  } catch (IOException e) {   e.printStackTrace();   }
 
-        //target
-        ExpandableListView data_target = (ExpandableListView) findViewById(R.id.expListView);
-        data_target.setAdapter(data_receiver.data_adapter);
     }
 
     class chat_view extends View {

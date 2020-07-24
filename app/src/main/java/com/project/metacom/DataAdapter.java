@@ -14,7 +14,7 @@ import java.util.List;
 import com.neovisionaries.ws.client.*;
 
 public class DataAdapter extends BaseExpandableListAdapter {
-    private Context context;
+    public Context context;
     public List<String> listGroup = new ArrayList<String>();
     public HashMap<String, List<String>> listChild  = new HashMap<String, List<String>>();
 

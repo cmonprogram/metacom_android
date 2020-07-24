@@ -1,6 +1,8 @@
 package com.project.metacom;
 
+import android.app.Activity;
 import android.os.AsyncTask;
+import android.widget.ExpandableListView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -12,6 +14,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -26,14 +29,19 @@ class DataRceveiver {
 
     public String server;
     public DataAdapter data_adapter;
+    public ExpandableListView data_target;
     public Boolean show  = false;
 
-    DataRceveiver(String server,DataAdapter data_adapter){
+
+    DataRceveiver(String server,DataAdapter data_adapter, ExpandableListView data_target){
         this.server = server;
         this.data_adapter = data_adapter;
+        this.data_target = data_target;
+        this.data_target.setAdapter(this.data_adapter);
     }
 
     public void Top_chart_execute() throws IOException {
+
         Request request = new Request.Builder()
                 .url("http://109.196.164.38/metacom/chat/get_top")
                 .build();
@@ -57,7 +65,13 @@ class DataRceveiver {
                             {
                                 JSONObject oneObject = jArray.getJSONObject(i);
                                 data_adapter.listGroup.add(oneObject.getString("chat_room"));
-                                //data_adapter.listChild.put(oneObject.getString("chat_room"), null);
+                                data_adapter.listChild.put(oneObject.getString("chat_room"),new ArrayList<String>());
+                                Activity a = (Activity)data_adapter.context;
+                                a.runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() { data_adapter.notifyDataSetChanged(); }
+                                });
+
                             }
                         } catch (JSONException e) {
                             // Oops
