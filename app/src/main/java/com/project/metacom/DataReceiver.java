@@ -24,6 +24,11 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
+
+//import org.apache.commons.codec.binary.Base32;
+
+
+
 //http://109.196.164.38/metacom/chat/get_top
 class DataRceveiver {
 
@@ -63,13 +68,21 @@ class DataRceveiver {
                             jArray = new JSONArray(result);
                             for (int i=0; i < jArray.length(); i++)
                             {
+
                                 JSONObject oneObject = jArray.getJSONObject(i);
-                                data_adapter.listGroup.add(oneObject.getString("chat_room"));
-                                data_adapter.listChild.put(oneObject.getString("chat_room"),new ArrayList<String>());
+
+
+                                String tmp_result = oneObject.getString("chat_room");
+                                byte[] byte_result = Base32.fromBase32Hex_full(tmp_result);
+                                final String decoded_result = new String(byte_result, "UTF-8");
+
                                 Activity a = (Activity)data_adapter.context;
                                 a.runOnUiThread(new Runnable() {
                                     @Override
-                                    public void run() { data_adapter.notifyDataSetChanged(); }
+                                    public void run() {
+                                        data_adapter.listGroup.add(decoded_result);
+                                        data_adapter.listChild.put(decoded_result,new ArrayList<String>());
+                                        data_adapter.notifyDataSetChanged(); }
                                 });
 
                             }
