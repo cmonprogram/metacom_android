@@ -1,4 +1,4 @@
-package com.project.metacom;
+package functions;
 
 /*
  * MIT License

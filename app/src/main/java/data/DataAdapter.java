@@ -1,4 +1,4 @@
-package com.project.metacom;
+package data;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -7,11 +7,11 @@ import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.TextView;
 
+import com.project.metacom.R;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
-import com.neovisionaries.ws.client.*;
 
 public class DataAdapter extends BaseExpandableListAdapter {
     public Context context;
