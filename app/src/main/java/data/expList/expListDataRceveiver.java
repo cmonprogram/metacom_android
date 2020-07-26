@@ -1,23 +1,16 @@
-package com.project.metacom;
+package data.expList;
 
 import android.app.Activity;
-import android.os.AsyncTask;
 import android.widget.ExpandableListView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 
+import functions.Base32;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.OkHttpClient;
@@ -25,20 +18,16 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 
-//import org.apache.commons.codec.binary.Base32;
-
-
-
 //http://109.196.164.38/metacom/chat/get_top
-class DataRceveiver {
+public class expListDataRceveiver {
 
     public String server;
-    public DataAdapter data_adapter;
+    public expListDataAdapter data_adapter;
     public ExpandableListView data_target;
     public Boolean show  = false;
 
 
-    DataRceveiver(String server,DataAdapter data_adapter, ExpandableListView data_target){
+    public expListDataRceveiver(String server, expListDataAdapter data_adapter, ExpandableListView data_target){
         this.server = server;
         this.data_adapter = data_adapter;
         this.data_target = data_target;

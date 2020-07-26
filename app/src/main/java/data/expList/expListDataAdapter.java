@@ -1,4 +1,4 @@
-package data;
+package data.expList;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -13,12 +13,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class DataAdapter extends BaseExpandableListAdapter {
+public class expListDataAdapter extends BaseExpandableListAdapter {
     public Context context;
     public List<String> listGroup = new ArrayList<String>();
     public HashMap<String, List<String>> listChild  = new HashMap<String, List<String>>();
 
-    public DataAdapter(Context context) {
+    public expListDataAdapter(Context context) {
         this.context = context;
         //this.initData();
     }
@@ -61,10 +61,8 @@ public class DataAdapter extends BaseExpandableListAdapter {
     @Override
     public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
         if (convertView == null) {
-            LayoutInflater infalInflater = (LayoutInflater) context
-                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = infalInflater.inflate(R.layout.list_group_item,
-                    null);
+            LayoutInflater infalInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            convertView = infalInflater.inflate(R.layout.list_group_item,null);
         }
 
         String textGroup = (String) getGroup(groupPosition);
@@ -106,7 +104,7 @@ public class DataAdapter extends BaseExpandableListAdapter {
     public boolean isChildSelectable(int groupPosition, int childPosition) {
         return true;
     }
-
+    /*
     private void initData() {
         //listGroup = new ArrayList<String>();
         //listChild = new HashMap<String, List<String>>();
@@ -141,4 +139,5 @@ public class DataAdapter extends BaseExpandableListAdapter {
         listChild.put(listGroup.get(2), listGroupC);
         listChild.put(listGroup.get(3), listGroupD);
     }
+    */
 }

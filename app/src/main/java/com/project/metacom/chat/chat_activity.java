@@ -1,4 +1,4 @@
-package com.project.metacom;
+package com.project.metacom.chat;
 
 import android.app.Activity;
 import android.content.Context;
@@ -6,10 +6,14 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ExpandableListView;
 
+import com.project.metacom.R;
+
 import java.io.IOException;
 
-import data.DataAdapter;
-import data.DataRceveiver;
+import data.expList.expListDataAdapter;
+import data.expList.expListDataRceveiver;
+
+import static com.project.metacom.config.server;
 
 public class chat_activity extends Activity {
 
@@ -19,15 +23,14 @@ public class chat_activity extends Activity {
         setTitle("ExpandableListView");
 
         chat_view cv = new chat_view(this);
-        setContentView(R.layout.chat_layout);
-       // RelativeLayout layout= (RelativeLayout) findViewById(R.id.rl);
-       // layout.addView(cv);
+        setContentView(R.layout.explist_layout);
+       // RelativeLayout topList_layout= (RelativeLayout) findViewById(R.id.rl);
+       // topList_layout.addView(cv);
 
+        expListDataAdapter data_adapter = new expListDataAdapter(this);
+        ExpandableListView data_target = (ExpandableListView) findViewById(R.id.explist_view);
 
-        DataAdapter data_adapter = new DataAdapter(this);
-        ExpandableListView data_target = (ExpandableListView) findViewById(R.id.expListView);
-
-        DataRceveiver data_receiver = new DataRceveiver("http://109.196.164.38",data_adapter, data_target);
+        expListDataRceveiver data_receiver = new expListDataRceveiver(server,data_adapter, data_target);
         try { data_receiver.Top_chart_execute();  } catch (IOException e) {   e.printStackTrace();   }
 
     }
