@@ -1,6 +1,7 @@
 package com.project.metacom.toplist;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -32,7 +33,13 @@ public class activity extends android.app.Activity {
 
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 DataStructure item = (DataStructure)data_adapter.getItem(position);
-                Toast.makeText(getBaseContext(),item.url,Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getBaseContext(),item.chat_room,Toast.LENGTH_SHORT).show();
+
+                Intent startIntent = new Intent(activity.this, com.project.metacom.comments.activity.class);
+                startIntent.putExtra("chat_room", item.chat_room);
+                startIntent.putExtra("page_title", item.page_title);
+                startActivity(startIntent);
+
             }
         });
 

@@ -59,12 +59,10 @@ public class DataRceveiver {
                                 String tmp_result = oneObject.getString("chat_room");
                                 byte[] byte_result = Base32.fromBase32Z(tmp_result);
 
-                                data.id = tmp_result;
-                                data.chat_room = new String(byte_result, "UTF-8");
-                                if(data.chat_room.length() >= 60)
-                                    data.chat_room = data.chat_room.substring(0,60) + "..";
+                                data.chat_room = tmp_result;
                                 data.url = new String(byte_result, "UTF-8");
-
+                                if(data.url.length() >= 60)
+                                    data.url = data.url.substring(0,60) + "..";
                                 data.page_title =  oneObject.getString("title");
                                 data.count = oneObject.getString("count");
 

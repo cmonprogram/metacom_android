@@ -29,7 +29,7 @@ public class DataAdapter extends ArrayAdapter {
         }
         TextView val1 = (TextView) convertView.findViewById(R.id.title);
         TextView val2 = (TextView) convertView.findViewById(R.id.count);
-        val1.setText(obj.page_title + "\n" + obj.chat_room);
+        val1.setText(obj.page_title + "\n" + obj.url);
         val2.setText(obj.count);
         return convertView;
     }

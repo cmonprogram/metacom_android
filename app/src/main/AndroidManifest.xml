@@ -23,13 +23,14 @@
 
         <activity
             android:name=".toplist.activity">
-        </activity>
-
-        <activity android:name=".comments.activity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".comments.activity">
         </activity>
 
     </application>

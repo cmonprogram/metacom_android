@@ -2,7 +2,7 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical">
 
     <RelativeLayout
@@ -12,15 +12,15 @@
 
      <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/user_image_view"
-            android:layout_width="96dp"
-            android:layout_height="96dp"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
             android:src="@mipmap/ic_launcher"/>
 
 
         <RelativeLayout
             android:id="@+id/relativeLayoutDate"
             android:layout_width="match_parent"
-            android:layout_height="96dp"
+            android:layout_height="64dp"
             android:layout_marginLeft="4dp"
             android:layout_toRightOf="@+id/user_image_view">
 
@@ -41,7 +41,7 @@
         <RelativeLayout
             android:id="@+id/relativeLayoutDate2"
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="wrap_content"
             android:layout_below="@+id/user_image_view">
 
             <TextView

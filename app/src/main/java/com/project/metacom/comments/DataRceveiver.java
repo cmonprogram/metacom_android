@@ -20,7 +20,7 @@ import static com.project.metacom.config.server;
 import static com.project.metacom.config.timeout;
 import static com.project.metacom.config.token;
 
-public class DataRceveiver extends AsyncTask<URL, Integer, Void> {
+public class DataRceveiver extends AsyncTask<String, Integer, Void> {
 
     DataAdapter data_adapter;
     WebSocket ws;
@@ -33,11 +33,11 @@ public class DataRceveiver extends AsyncTask<URL, Integer, Void> {
 
 
     @Override
-    protected Void doInBackground(URL... urls) {
+    protected Void doInBackground(String... urls) {
             try {
                 this.ws = new WebSocketFactory()
                         .setConnectionTimeout(timeout)
-                        .createSocket(server+"/chat/pb48ehb4fhzsr5dbp3i1h551chzu67dfqp4dnca")
+                        .createSocket(server+"/chat/"+urls[0])
                         .addListener(new WebSocketAdapter() {
                             // A text message arrived from the server.
                             public void onTextMessage(WebSocket websocket, String message) {

@@ -71,6 +71,9 @@ public class DataAdapter extends RecyclerView.Adapter<DataAdapter.DataAdapterVie
         // - replace the contents of the view with that element
         DataStructure comment = Dataset.get(position);
 
+        if(comment.likes.equals("null")) comment.likes = "0";
+        if(comment.dislikes.equals("null")) comment.dislikes = "0";
+
         holder.nickTextView.setText(comment.user_id);
         holder.creationDateTextView.setText(comment.time);
         holder.contentTextView.setText(comment.text);
