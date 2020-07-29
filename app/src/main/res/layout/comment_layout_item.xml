@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="8dp">
+
+     <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/user_image_view"
+            android:layout_width="96dp"
+            android:layout_height="96dp"
+            android:src="@mipmap/ic_launcher"/>
+
+
+        <RelativeLayout
+            android:id="@+id/relativeLayoutDate"
+            android:layout_width="match_parent"
+            android:layout_height="96dp"
+            android:layout_marginLeft="4dp"
+            android:layout_toRightOf="@+id/user_image_view">
+
+            <TextView
+                android:id="@+id/user_name_text_view"
+                style="@style/TextView.Primary.Header"
+                android:text="Username" />
+
+            <TextView
+                android:id="@+id/date_text_view"
+                style="@style/TextView.Secondary"
+                android:layout_below="@id/user_name_text_view"
+                android:text="Date" />
+
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:id="@+id/relativeLayoutDate2"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_below="@+id/user_image_view">
+
+            <TextView
+                android:id="@+id/commentary_text_view"
+                style="@style/TextView.Secondary"
+                android:layout_width="match_parent"
+                android:padding="8dp"
+                android:text="Comment" />
+
+            <TextView
+                android:id="@+id/likes_text_view"
+                style="@style/TextView.Primary.Bold"
+                android:layout_below="@id/commentary_text_view"
+                android:text="4" />
+
+            <TextView
+                android:id="@+id/following_text_view"
+                style="@style/TextView.Secondary"
+                android:layout_below="@id/commentary_text_view"
+                android:layout_marginStart="5dp"
+                android:layout_toEndOf="@+id/likes_text_view"
+                android:text="like" />
+
+            <TextView
+                android:id="@+id/dislikes_text_view"
+                style="@style/TextView.Primary.Bold"
+                android:layout_below="@id/commentary_text_view"
+                android:layout_marginStart="20dp"
+                android:layout_toEndOf="@+id/following_text_view"
+                android:text="4" />
+
+            <TextView
+                android:id="@+id/followers_text_view"
+                style="@style/TextView.Secondary"
+                android:layout_below="@id/commentary_text_view"
+                android:layout_marginStart="10dp"
+                android:layout_toEndOf="@+id/dislikes_text_view"
+                android:text="dislike" />
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+    <View
+        android:id="@+id/delimeter_view"
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:background="@color/gray_mercury"/>
+</LinearLayout>

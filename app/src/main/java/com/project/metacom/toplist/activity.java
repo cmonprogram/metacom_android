@@ -18,7 +18,8 @@ public class activity extends android.app.Activity {
         super.onCreate(savedInstanceState);
         setTitle("Top chart");
 
-        top_view cv = new top_view(this);
+
+        view cv = new view(this);
         setContentView(R.layout.list_layout);
         // RelativeLayout topList_layout= (RelativeLayout) findViewById(R.id.rl);
         // topList_layout.addView(cv);
@@ -44,8 +45,8 @@ public class activity extends android.app.Activity {
 
 
 
-    class top_view extends View {
-        public top_view(Context context) {
+    class view extends View {
+        public view(Context context) {
             super(context);
         }
     }

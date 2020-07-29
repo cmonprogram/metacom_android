@@ -75,7 +75,7 @@ public class EchoClient
     /**
      * Connect to the server.
      */
-    private static WebSocket connect() throws Exception
+    public static WebSocket connect() throws Exception
     {
         return new WebSocketFactory()
                 .setConnectionTimeout(TIMEOUT)
