@@ -12,8 +12,8 @@
 
      <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/user_image_view"
-            android:layout_width="64dp"
-            android:layout_height="64dp"
+            android:layout_width="52dp"
+            android:layout_height="52dp"
             android:src="@mipmap/ic_launcher"/>
 
 
@@ -55,7 +55,7 @@
                 android:id="@+id/likes_text_view"
                 style="@style/TextView.Primary.Bold"
                 android:layout_below="@id/commentary_text_view"
-                android:text="4" />
+                android:text="0" />
 
             <TextView
                 android:id="@+id/following_text_view"
@@ -71,7 +71,7 @@
                 android:layout_below="@id/commentary_text_view"
                 android:layout_marginStart="20dp"
                 android:layout_toEndOf="@+id/following_text_view"
-                android:text="4" />
+                android:text="0" />
 
             <TextView
                 android:id="@+id/followers_text_view"

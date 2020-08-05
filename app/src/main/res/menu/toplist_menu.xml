@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/action_create_toplistitem"
+        app:itemTextAppearance="@style/MenuItems"
+        android:title="@string/add"
+        app:showAsAction="always" />
+    <!--
+    <item
+        android:id="@+id/action_name"
+        android:icon="@drawable/you_resource_here"
+        android:title="Text to be seen by user"
+        app:showAsAction="always"
+        android:orderInCategory="0"/>
+    -->
+
+</menu>

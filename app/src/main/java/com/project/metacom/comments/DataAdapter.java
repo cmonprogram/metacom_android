@@ -1,6 +1,9 @@
 package com.project.metacom.comments;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -83,6 +86,8 @@ public class DataAdapter extends RecyclerView.Adapter<DataAdapter.DataAdapterVie
             holder.contentTextView.setText(comment.text);
             holder.likesTextView.setText(comment.likes);
             holder.dislikesTextView.setText(comment.dislikes);
+            holder.userImageView.setImageBitmap(comment.user.image);
+
         }catch (Exception e){
             holder = null;
         }
