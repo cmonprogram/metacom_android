@@ -6,11 +6,11 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.project.metacom.R;
+import com.project.metacom.data.TopListItem;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -28,13 +28,13 @@ public class activity extends AppCompatActivity {
         // topList_layout.addView(cv);
 
 
-        final DataAdapter data_adapter = new DataAdapter(this,new ArrayList<DataStructure>());
+        final DataAdapter data_adapter = new DataAdapter(this,new ArrayList<TopListItem>());
         ListView data_target = (ListView) findViewById(R.id.list_view);
 
         data_target.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                DataStructure item = (DataStructure)data_adapter.getItem(position);
+                TopListItem item = (TopListItem)data_adapter.getItem(position);
                 //Toast.makeText(getBaseContext(),item.chat_room,Toast.LENGTH_SHORT).show();
 
                 Intent startIntent = new Intent(activity.this, com.project.metacom.comments.activity.class);
@@ -45,7 +45,7 @@ public class activity extends AppCompatActivity {
             }
         });
 
-        DataRceveiver data_receiver = new DataRceveiver(data_adapter);
+        DataReceiver_toplistitem data_receiver = new DataReceiver_toplistitem(data_adapter);
         try { data_receiver.execute();  } catch (IOException e) {   e.printStackTrace();   }
 
         data_target.setAdapter(data_adapter);

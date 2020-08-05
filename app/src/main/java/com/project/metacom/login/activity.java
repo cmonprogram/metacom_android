@@ -78,6 +78,7 @@ public class activity  extends AppCompatActivity {
                                 if(room != null){
                                     Intent startIntent = new Intent(activity.this, com.project.metacom.comments.activity.class);
                                     startIntent.putExtra("go_to", room);
+                                    startIntent.putExtra("page_title", getIntent().getStringExtra("page_title"));
                                     startActivity(startIntent);
                                 }else {
                                     Intent startIntent = new Intent(activity.this, com.project.metacom.toplist.activity.class);

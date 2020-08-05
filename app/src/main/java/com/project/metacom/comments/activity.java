@@ -15,7 +15,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.textfield.TextInputEditText;
 import com.project.metacom.R;
-import com.project.metacom.trash.login.Login;
 
 import static com.project.metacom.config.checkMe;
 import static com.project.metacom.config.token;
@@ -40,8 +39,11 @@ public class activity extends AppCompatActivity {
         final DataAdapter data_adapter = new DataAdapter(this);
         data_target.setAdapter(data_adapter);
 
-        final DataRceveiver data_receiver = new DataRceveiver(data_adapter);
-        data_receiver.execute(getIntent().getStringExtra("go_to"));
+        final DataReceiver_comment data_receiver_comment = new DataReceiver_comment(data_adapter);
+        data_receiver_comment.execute(getIntent().getStringExtra("go_to"));
+
+        //final DataReceiver_user data_receiver_user = new DataReceiver_user(data_adapter);
+
         //getActionBar().setDisplayHomeAsUpEnabled(true);
 
         // enable toolbar
@@ -62,7 +64,7 @@ public class activity extends AppCompatActivity {
                     public void run() {
                         try  {
                             if(checkMe()) {
-                                data_receiver.ws.sendText("{\"action\": \"post\", \"text\": \"" + v.getText().toString() + "\", \"token\": \"" + token + "\"}");
+                                data_receiver_comment.ws.sendText("{\"action\": \"post\", \"text\": \"" + v.getText().toString() + "\", \"token\": \"" + token + "\"}");
                                 handled[0] = true;
                                 runOnUiThread(new Runnable() {
                                     @Override
@@ -74,6 +76,7 @@ public class activity extends AppCompatActivity {
                             }else{
                                 Intent startIntent = new Intent(activity.this, com.project.metacom.login.activity.class);
                                 startIntent.putExtra("go_to", getIntent().getStringExtra("go_to"));
+                                startIntent.putExtra("page_title", getIntent().getStringExtra("page_title"));
                                 startActivity(startIntent);
                             }
                         } catch (Exception e) {
@@ -90,7 +93,7 @@ public class activity extends AppCompatActivity {
         /*
         data_target.setOnClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                DataStructure item = (DataStructure)data_adapter.getItem(position);
+                Comment item = (Comment)data_adapter.getItem(position);
                 Toast.makeText(getBaseContext(),item.url,Toast.LENGTH_SHORT).show();
             }
         });

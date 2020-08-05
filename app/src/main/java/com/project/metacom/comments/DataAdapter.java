@@ -13,6 +13,8 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.project.metacom.R;
+import com.project.metacom.data.Comment;
+import com.project.metacom.data.User;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -21,7 +23,8 @@ import java.util.List;
 import java.util.ListIterator;
 
 public class DataAdapter extends RecyclerView.Adapter<DataAdapter.DataAdapterViewHolder> {
-    public List<DataStructure> Dataset = new ArrayList<DataStructure>();
+    public List<Comment> Dataset = new ArrayList<Comment>();
+    public List<User> UserBase = new ArrayList<User>();
     private Context context;
 
     DataAdapter(Context context){
@@ -67,18 +70,22 @@ public class DataAdapter extends RecyclerView.Adapter<DataAdapter.DataAdapterVie
     // Replace the contents of a view (invoked by the layout manager)
     @Override
     public void onBindViewHolder(@NonNull DataAdapterViewHolder holder, int position) {
-        // - get element from your dataset at this position
-        // - replace the contents of the view with that element
-        DataStructure comment = Dataset.get(position);
+        try {
+            // - get element from your dataset at this position
+            // - replace the contents of the view with that element
+            Comment comment = Dataset.get(position);
 
-        if(comment.likes.equals("null")) comment.likes = "0";
-        if(comment.dislikes.equals("null")) comment.dislikes = "0";
+            if (comment.likes.equals("null")) comment.likes = "0";
+            if (comment.dislikes.equals("null")) comment.dislikes = "0";
 
-        holder.nickTextView.setText(comment.user_id);
-        holder.creationDateTextView.setText(comment.time);
-        holder.contentTextView.setText(comment.text);
-        holder.likesTextView.setText(comment.likes);
-        holder.dislikesTextView.setText(comment.dislikes);
+            holder.nickTextView.setText(comment.user.username);
+            holder.creationDateTextView.setText(comment.time);
+            holder.contentTextView.setText(comment.text);
+            holder.likesTextView.setText(comment.likes);
+            holder.dislikesTextView.setText(comment.dislikes);
+        }catch (Exception e){
+            holder = null;
+        }
     }
 
 

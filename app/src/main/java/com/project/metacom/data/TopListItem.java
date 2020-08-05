@@ -1,6 +1,6 @@
-package com.project.metacom.toplist;
+package com.project.metacom.data;
 
-public class DataStructure {
+public class TopListItem {
     public String chat_room;
     public String url;
     public String page_title;

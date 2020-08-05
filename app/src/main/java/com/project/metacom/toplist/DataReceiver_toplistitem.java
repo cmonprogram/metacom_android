@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.widget.ExpandableListView;
 
 import com.project.metacom.config;
+import com.project.metacom.data.TopListItem;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -19,13 +20,13 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-public class DataRceveiver {
+public class DataReceiver_toplistitem {
 
     DataAdapter data_adapter;
     public Boolean show  = false;
 
 
-    public DataRceveiver(DataAdapter data_adapter){
+    public DataReceiver_toplistitem(DataAdapter data_adapter){
         this.data_adapter = data_adapter;
     }
 
@@ -55,7 +56,7 @@ public class DataRceveiver {
 
                                 JSONObject oneObject = jArray.getJSONObject(i);
 
-                                final DataStructure data = new DataStructure();
+                                final TopListItem data = new TopListItem();
                                 String tmp_result = oneObject.optString("chat_room");
                                 byte[] byte_result = Base32.fromBase32Z(tmp_result);
 

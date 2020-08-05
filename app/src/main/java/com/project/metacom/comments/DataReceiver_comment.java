@@ -8,6 +8,8 @@ import com.neovisionaries.ws.client.WebSocketAdapter;
 import com.neovisionaries.ws.client.WebSocketException;
 import com.neovisionaries.ws.client.WebSocketExtension;
 import com.neovisionaries.ws.client.WebSocketFactory;
+import com.project.metacom.data.Comment;
+import com.project.metacom.data.User;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -21,15 +23,17 @@ import static com.project.metacom.config.server;
 import static com.project.metacom.config.timeout;
 import static com.project.metacom.config.token;
 
-public class DataRceveiver extends AsyncTask<String, Integer, Void> {
+public class DataReceiver_comment extends AsyncTask<String, Integer, Void> {
 
     DataAdapter data_adapter;
+    DataReceiver_user data_receiver_user;
     public WebSocket ws;
     public Boolean show  = false;
 
 
-    public DataRceveiver(DataAdapter data_adapter){
+    public DataReceiver_comment(DataAdapter data_adapter){
         this.data_adapter = data_adapter;
+        this.data_receiver_user = new DataReceiver_user(data_adapter);
     }
 
 
@@ -53,13 +57,15 @@ public class DataRceveiver extends AsyncTask<String, Integer, Void> {
                                         jArray = new JSONArray(json.getString("data"));
                                     for (int i = 0; i < jArray.length(); i++) {
                                         JSONObject oneObject = jArray.getJSONObject(i);
-                                        final DataStructure data = new DataStructure().fromJson(oneObject);
-                                        add_comment(data,null);
+                                        final Comment comment = new Comment().fromJson(oneObject);
+                                        comment.user = data_receiver_user.check(comment.user_id);
+                                        add_comment(comment, null);
                                     }
                                 }else if(Objects.equals(action, "post")){
                                         json = new JSONObject(message);
-                                        final DataStructure data = new DataStructure().fromJson(json);
-                                        add_comment(data,0);
+                                        final Comment comment = new Comment().fromJson(json);
+                                        comment.user = data_receiver_user.check(comment.user_id);
+                                        add_comment(comment,0);
                                 }
 
 
@@ -80,18 +86,18 @@ public class DataRceveiver extends AsyncTask<String, Integer, Void> {
         return null;
     }
 
-    private void add_comment(final DataStructure data, final Integer index){
+    private void add_comment(final Comment comment, final Integer index){
         Activity a = (Activity) data_adapter.getContext();
         a.runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 if(index == null) {
                     //int length = data_adapter.getItemCount();
-                    data_adapter.Dataset.add(data);
+                    data_adapter.Dataset.add(comment);
                     data_adapter.notifyDataSetChanged();
                     //data_adapter.notifyItemInserted(length);
                 }else{
-                    data_adapter.Dataset.add(index,data);
+                    data_adapter.Dataset.add(index,comment);
                     data_adapter.notifyDataSetChanged();
                 }
             }

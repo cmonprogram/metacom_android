@@ -8,12 +8,13 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.project.metacom.R;
+import com.project.metacom.data.TopListItem;
 
 import java.util.ArrayList;
 
 public class DataAdapter extends ArrayAdapter {
 
-    public DataAdapter(Context context, ArrayList<DataStructure> array) {
+    public DataAdapter(Context context, ArrayList<TopListItem> array) {
         super(context, 0, array);
     }
 
@@ -21,7 +22,7 @@ public class DataAdapter extends ArrayAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
 
         // Get the data item for this position
-        DataStructure obj = (DataStructure)getItem(position);
+        TopListItem obj = (TopListItem)getItem(position);
         // Check if an existing view is being reused, otherwise inflate the view
         if (convertView == null) {
             LayoutInflater infalInflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);

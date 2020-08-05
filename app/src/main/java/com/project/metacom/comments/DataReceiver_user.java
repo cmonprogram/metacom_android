@@ -1,4 +1,7 @@
-package com.project.metacom;
+package com.project.metacom.comments;
+
+import com.project.metacom.config;
+import com.project.metacom.data.User;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -7,24 +10,27 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.Objects;
 
-import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-public class config {
-    public static final String server = "http://109.196.164.38";
-    public static final int timeout = 5000;
-    public static String token = "";
+public class DataReceiver_user {
+    DataAdapter data_adapter;
+    public DataReceiver_user(DataAdapter data_adapter){
+        this.data_adapter = data_adapter;
+    }
 
-    public static final MediaType JSON_HEADER = MediaType.parse("application/json; charset=utf-8");
-    public static Boolean checkMe()
-    {
+    public User check(String id){
+        for (User user : data_adapter.UserBase) {
+           if(Objects.equals(id, user.id)){
+               return user;
+           }
+        }
 
-        RequestBody requestmBody = RequestBody.create("{\"token_type\": \"bearer\", \"access_token\": \""+token+"\"}",JSON_HEADER );
+        RequestBody requestmBody = RequestBody.create(new byte[0]);
         Request request = new Request.Builder()
-                .url(config.server + "/token/check")
+                .url(config.server + "/metacom/user_info/"+id)
                 .post(requestmBody)
                 .build();
 
@@ -35,11 +41,10 @@ public class config {
             JSONArray jArray = null;
             try {
                 json  = new JSONObject(result);
-                String status = json.getString("status");
-                if (Objects.equals(status, "success")){
-                    return true;
-                }else{
-                    return false;
+                User user = new User().fromJson(json);
+                if(user != null) {
+                    data_adapter.UserBase.add(user);
+                    return user;
                 }
                 // localStorage.setItem('meta_chat_self_id', response.id);
             } catch (JSONException e) {
@@ -48,6 +53,8 @@ public class config {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return false;
+
+        return null;
     }
+
 }
