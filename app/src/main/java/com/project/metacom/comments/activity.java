@@ -41,7 +41,7 @@ public class activity extends AppCompatActivity {
         data_target.setAdapter(data_adapter);
 
         final DataRceveiver data_receiver = new DataRceveiver(data_adapter);
-        data_receiver.execute(getIntent().getStringExtra("chat_room"));
+        data_receiver.execute(getIntent().getStringExtra("go_to"));
         //getActionBar().setDisplayHomeAsUpEnabled(true);
 
         // enable toolbar
@@ -72,7 +72,8 @@ public class activity extends AppCompatActivity {
                                 });
 
                             }else{
-                                Intent startIntent = new Intent(activity.this, Login.class);
+                                Intent startIntent = new Intent(activity.this, com.project.metacom.login.activity.class);
+                                startIntent.putExtra("go_to", getIntent().getStringExtra("go_to"));
                                 startActivity(startIntent);
                             }
                         } catch (Exception e) {

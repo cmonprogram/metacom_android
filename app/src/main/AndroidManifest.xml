@@ -19,7 +19,7 @@
         >
 
         <activity
-            android:name=".trash.login.Login"
+            android:name=".login.activity"
             android:label="@string/title_activity_login">
         </activity>
 

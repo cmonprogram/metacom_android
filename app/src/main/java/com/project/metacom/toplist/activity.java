@@ -8,12 +8,14 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.project.metacom.R;
 
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class activity extends android.app.Activity {
+public class activity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,7 +38,7 @@ public class activity extends android.app.Activity {
                 //Toast.makeText(getBaseContext(),item.chat_room,Toast.LENGTH_SHORT).show();
 
                 Intent startIntent = new Intent(activity.this, com.project.metacom.comments.activity.class);
-                startIntent.putExtra("chat_room", item.chat_room);
+                startIntent.putExtra("go_to", item.chat_room);
                 startIntent.putExtra("page_title", item.page_title);
                 startActivity(startIntent);
 

@@ -29,7 +29,7 @@ import okhttp3.Response;
 public class config {
     public static final String server = "http://109.196.164.38";
     public static final int timeout = 5000;
-    public static final String token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtYXBfdmxhZCIsImV4cCI6MTU5NjYyOTk3N30.cKbW8oiF2B8KGQ_xUc4zQTwmSo3UFGEgvM_4vigiIWw";
+    public static String token = "";
 
     public static final MediaType JSON_HEADER = MediaType.parse("application/json; charset=utf-8");
     public static Boolean checkMe()
