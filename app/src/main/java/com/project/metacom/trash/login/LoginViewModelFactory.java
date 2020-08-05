@@ -1,11 +1,11 @@
-package com.project.metacom.login.login;
+package com.project.metacom.trash.login;
 
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.annotation.NonNull;
 
-import com.project.metacom.login.login.data.LoginDataSource;
-import com.project.metacom.login.login.data.LoginRepository;
+import com.project.metacom.trash.login.data.LoginDataSource;
+import com.project.metacom.trash.login.data.LoginRepository;
 
 /**
  * ViewModel provider factory to instantiate LoginViewModel.

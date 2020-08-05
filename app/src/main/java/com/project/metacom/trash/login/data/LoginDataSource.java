@@ -1,6 +1,6 @@
-package com.project.metacom.login.login.data;
+package com.project.metacom.trash.login.data;
 
-import com.project.metacom.login.login.data.model.LoggedInUser;
+import com.project.metacom.trash.login.data.model.LoggedInUser;
 
 import java.io.IOException;
 

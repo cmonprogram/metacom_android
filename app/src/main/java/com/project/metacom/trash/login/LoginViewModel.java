@@ -1,4 +1,4 @@
-package com.project.metacom.login.login;
+package com.project.metacom.trash.login;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -6,9 +6,9 @@ import androidx.lifecycle.ViewModel;
 
 import android.util.Patterns;
 
-import com.project.metacom.login.login.data.LoginRepository;
-import com.project.metacom.login.login.data.Result;
-import com.project.metacom.login.login.data.model.LoggedInUser;
+import com.project.metacom.trash.login.data.LoginRepository;
+import com.project.metacom.trash.login.data.Result;
+import com.project.metacom.trash.login.data.model.LoggedInUser;
 import com.project.metacom.R;
 
 public class LoginViewModel extends ViewModel {

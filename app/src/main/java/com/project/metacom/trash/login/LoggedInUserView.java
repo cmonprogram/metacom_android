@@ -1,4 +1,4 @@
-package com.project.metacom.login.login;
+package com.project.metacom.trash.login;
 
 /**
  * Class exposing authenticated user details to the UI.

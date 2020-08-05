@@ -5,53 +5,46 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:fitsSystemWindows="true">
-<!--
-        <android.support.design.widget.AppBarLayout
-            android:id="@+id/app_bar_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+    android:fitsSystemWindows="true"
+    android:isScrollContainer="true"
+    >
 
-            <android.support.v7.widget.Toolbar
-                android:id="@+id/toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                android:background="?attr/colorPrimary"
-                app:layout_scrollFlags="scroll|enterAlways"
-                app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-                app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
-
-            </android.support.v7.widget.Toolbar>
-        </android.support.design.widget.AppBarLayout>
--->
-
-
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="?attr/colorPrimary"
-        android:minHeight="?attr/actionBarSize"
-        android:theme="?attr/actionBarTheme" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/comments"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="85"/>
-
+            android:layout_weight="85"
+        android:isScrollContainer="true"
+        />
 
 
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="15">
-
-        <com.google.android.material.textfield.TextInputEditText
+        android:layout_height="60dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:isScrollContainer="true"
+        android:background="#0A000000"
+        >
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Type smth.." />
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:fitsSystemWindows="true"
+            android:isScrollContainer="true"
+            >
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/send"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:hint="Type smth.."
+            android:inputType="textLongMessage"
+            android:imeOptions="actionSend"
+            android:isScrollContainer="true"
+            />
+        </ScrollView>
     </com.google.android.material.textfield.TextInputLayout>
+
 
 </LinearLayout>

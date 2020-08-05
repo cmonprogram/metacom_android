@@ -56,15 +56,15 @@ public class DataRceveiver {
                                 JSONObject oneObject = jArray.getJSONObject(i);
 
                                 final DataStructure data = new DataStructure();
-                                String tmp_result = oneObject.getString("chat_room");
+                                String tmp_result = oneObject.optString("chat_room");
                                 byte[] byte_result = Base32.fromBase32Z(tmp_result);
 
                                 data.chat_room = tmp_result;
                                 data.url = new String(byte_result, "UTF-8");
                                 if(data.url.length() >= 60)
                                     data.url = data.url.substring(0,60) + "..";
-                                data.page_title =  oneObject.getString("title");
-                                data.count = oneObject.getString("count");
+                                data.page_title =  oneObject.optString("title");
+                                data.count = oneObject.optString("count");
 
                                 Activity a = (Activity)data_adapter.getContext();
                                 a.runOnUiThread(new Runnable() {

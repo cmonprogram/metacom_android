@@ -1,4 +1,4 @@
-package com.project.metacom.login.login;
+package com.project.metacom.trash.login;
 
 import androidx.annotation.Nullable;
 

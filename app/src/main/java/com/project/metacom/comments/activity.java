@@ -3,29 +3,28 @@ package com.project.metacom.comments;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.Toast;
+import android.view.inputmethod.EditorInfo;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.textfield.TextInputEditText;
 import com.project.metacom.R;
+import com.project.metacom.trash.login.Login;
 
-import java.io.IOException;
+import static com.project.metacom.config.checkMe;
+import static com.project.metacom.config.token;
 
 public class activity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setTitle(getIntent().getStringExtra("page_title"));
-
-        // enable toolbar
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         setContentView(R.layout.comment_layout);
         RecyclerView data_target = (RecyclerView) findViewById(R.id.comments);
@@ -41,12 +40,52 @@ public class activity extends AppCompatActivity {
         final DataAdapter data_adapter = new DataAdapter(this);
         data_target.setAdapter(data_adapter);
 
-        DataRceveiver data_receiver = new DataRceveiver(data_adapter);
+        final DataRceveiver data_receiver = new DataRceveiver(data_adapter);
         data_receiver.execute(getIntent().getStringExtra("chat_room"));
         //getActionBar().setDisplayHomeAsUpEnabled(true);
 
+        // enable toolbar
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
 
+        // input event
+        TextInputEditText editText = (TextInputEditText) findViewById(R.id.send);
+        editText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(final TextView v, int actionId, KeyEvent event) {
+                final boolean[] handled = {false};
+                if (actionId == EditorInfo.IME_ACTION_SEND) {
 
+                Thread thread = new Thread(new Runnable() {
+
+                    @Override
+                    public void run() {
+                        try  {
+                            if(checkMe()) {
+                                data_receiver.ws.sendText("{\"action\": \"post\", \"text\": \"" + v.getText().toString() + "\", \"token\": \"" + token + "\"}");
+                                handled[0] = true;
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        v.setText("");
+                                    }
+                                });
+
+                            }else{
+                                Intent startIntent = new Intent(activity.this, Login.class);
+                                startActivity(startIntent);
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+                thread.start();
+                }
+
+                return handled[0];
+            }
+        });
         /*
         data_target.setOnClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
