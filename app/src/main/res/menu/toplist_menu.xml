@@ -3,7 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/action_create_toplistitem"
-        app:itemTextAppearance="@style/MenuItems"
         android:title="@string/add"
         app:showAsAction="always" />
     <!--

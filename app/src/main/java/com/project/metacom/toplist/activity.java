@@ -3,10 +3,16 @@ package com.project.metacom.toplist;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.RelativeSizeSpan;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
@@ -27,13 +33,13 @@ public class activity extends AppCompatActivity {
         //getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         view cv = new view(this);
-        setContentView(R.layout.list_layout);
+        setContentView(R.layout.toplist_layout);
         // RelativeLayout topList_layout= (RelativeLayout) findViewById(R.id.rl);
         // topList_layout.addView(cv);
 
 
         final DataAdapter data_adapter = new DataAdapter(this,new ArrayList<TopListItem>());
-        ListView data_target = (ListView) findViewById(R.id.list_view);
+        ListView data_target = (ListView) findViewById(R.id.toplist_view);
 
         data_target.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
@@ -60,6 +66,16 @@ public class activity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.toplist_menu, menu);
+
+        // change menu font size
+        //for(int i = 0; i < menu.size(); i++) {
+            MenuItem item = menu.getItem(0);
+            SpannableString spanString = new SpannableString(item.getTitle().toString());
+            spanString.setSpan(new RelativeSizeSpan(1.5f), 0, spanString.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            item.setTitle(spanString);
+        //}
+
+        
         return true;
     }
     @Override
@@ -71,6 +87,20 @@ public class activity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_create_toplistitem) {
+
+            setContentView(R.layout.toplist_layout_site_tab);
+            WebView webView = (WebView) findViewById(R.id.toplist_webView);
+            webView.setWebViewClient(new WebViewClient());
+
+            webView.getSettings().setJavaScriptEnabled(true);
+            webView.getSettings().setBuiltInZoomControls(true);
+            webView.getSettings().setSupportZoom(true);
+
+            webView.setScrollBarStyle(WebView.SCROLLBARS_OUTSIDE_OVERLAY);
+            webView.setScrollbarFadingEnabled(false);
+
+            webView.loadUrl("https://www.google.com");
+
             return true;
         }
 
