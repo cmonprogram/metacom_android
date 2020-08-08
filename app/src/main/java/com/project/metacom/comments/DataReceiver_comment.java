@@ -68,9 +68,6 @@ public class DataReceiver_comment extends AsyncTask<String, Integer, Void> {
                                         add_comment(comment,0);
                                 }
 
-
-
-
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }

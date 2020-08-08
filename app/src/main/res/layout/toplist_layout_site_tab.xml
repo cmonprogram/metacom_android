@@ -2,36 +2,28 @@
 <LinearLayout android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:layout_gravity="center"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <EditText
-        android:id="@+id/editText"
+        android:id="@+id/add_toplist_text"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="20dp"
         android:ems="10"
-        android:inputType="textPersonName"
-        android:text="Name" />
-
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-android:layout_width="fill_parent"
-android:layout_height="fill_parent"
-android:background="#FFFFD0">
-
-
-
+        android:inputType="text"
+        android:hint="Describe the content"
+        android:layout_weight="10"
+        />
     <WebView
         android:id="@+id/toplist_webView"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent">
-
-    </WebView>
-
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="80"
+        ></WebView>
     <Button
-    android:id="@+id/My_btn"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_alignParentStart="true"
-    android:layout_alignParentBottom="true"
-    android:text="Submit" />
-</RelativeLayout>
+        android:id="@+id/add_toplist_submit"
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:layout_weight="10"
+        android:text="Submit" />
 </LinearLayout>

@@ -15,14 +15,56 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.textfield.TextInputEditText;
 import com.project.metacom.R;
+import com.project.metacom.config;
 
-import static com.project.metacom.config.checkMe;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
+
 import static com.project.metacom.config.token;
+import static functions.CheckMe.checkMe;
 
 public class activity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+/*
+
+        final String[] title = {getIntent().getStringExtra("go_to")};
+        Request request = new Request.Builder()
+                .url(config.server + "/metacom/room_info/" + getIntent().getStringExtra("go_to") )
+                .build();
+
+        new OkHttpClient().newCall(request)
+                .enqueue(new Callback() {
+                             @Override
+                             public void onFailure(final Call call, IOException e) {
+                                 // Error
+                             }
+                             @Override
+                             public void onResponse(Call call, final Response response) throws IOException {
+                                 String result = response.body().string();
+                                 JSONObject json = null;
+                                 JSONArray jArray = null;
+                                 try {
+                                     json = new JSONObject(result);
+                                     title[0] = json.optString("title");
+
+                                 } catch (JSONException e) {
+                                     e.printStackTrace();
+                                 }
+                             }
+                         });
+*/
+
         setTitle(getIntent().getStringExtra("page_title"));
 
         setContentView(R.layout.comment_layout);

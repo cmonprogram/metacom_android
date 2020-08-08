@@ -19,35 +19,5 @@ public class config {
     public static String token = "";
 
     public static final MediaType JSON_HEADER = MediaType.parse("application/json; charset=utf-8");
-    public static Boolean checkMe()
-    {
 
-        RequestBody requestmBody = RequestBody.create("{\"token_type\": \"bearer\", \"access_token\": \""+token+"\"}",JSON_HEADER );
-        Request request = new Request.Builder()
-                .url(config.server + "/token/check")
-                .post(requestmBody)
-                .build();
-
-        try {
-            Response response = new OkHttpClient().newCall(request).execute();
-            String result = response.body().string();
-            JSONObject json = null;
-            JSONArray jArray = null;
-            try {
-                json  = new JSONObject(result);
-                String status = json.getString("status");
-                if (Objects.equals(status, "success")){
-                    return true;
-                }else{
-                    return false;
-                }
-                // localStorage.setItem('meta_chat_self_id', response.id);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return false;
-    }
 }
