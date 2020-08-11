@@ -10,7 +10,7 @@
 
     <!-- custom styles -->
     <style name="MenuItems">
-        <item name="android:textSize">48sp</item>
+        <item name="android:textSize">18sp</item>
     </style>
     <style name="TextView">
         <item name="android:layout_width">wrap_content</item>

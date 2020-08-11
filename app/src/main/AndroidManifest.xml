@@ -33,6 +33,10 @@
         </activity>
 
         <activity
+            android:name=".web_view.activity">
+        </activity>
+
+        <activity
             android:name=".comments.activity">
         </activity>
 

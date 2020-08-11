@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/action_create_toplistitem"
+        android:icon="@drawable/ic_add_black_64dp"
         android:title="@string/add"
         app:showAsAction="always" />
     <!--

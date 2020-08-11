@@ -88,7 +88,6 @@ public class activity extends AppCompatActivity {
 
         DataReceiver_toplistitem data_receiver = new DataReceiver_toplistitem(data_adapter);
         try { data_receiver.execute();  } catch (IOException e) {   e.printStackTrace();   }
-
         data_target.setAdapter(data_adapter);
 
     }
@@ -97,18 +96,9 @@ public class activity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.toplist_menu, menu);
-
-        // change menu font size
-        //for(int i = 0; i < menu.size(); i++) {
-            MenuItem item = menu.getItem(0);
-            SpannableString spanString = new SpannableString(item.getTitle().toString());
-            spanString.setSpan(new RelativeSizeSpan(1.5f), 0, spanString.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-            item.setTitle(spanString);
-        //}
-
-        
         return true;
     }
+
     @Override
     public boolean onOptionsItemSelected(final MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -118,146 +108,8 @@ public class activity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_create_toplistitem) {
-
-            Thread thread = new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    if(!checkMe()) {
-                        checkMe_dialog( activity.this);
-                    }
-                }
-            });
-            thread.start();
-            try {
-                thread.join();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-
-            setContentView(R.layout.toplist_layout_site_tab);
-
-            // web view page url
-            final String[] page_url = {null};
-
-            // submit dialog
-            Button submit_button = (Button) findViewById(R.id.add_toplist_submit);
-            submit_button.setOnClickListener(new View.OnClickListener() {
-                public void onClick(View v) {
-                    EditText text_field = (EditText) findViewById(R.id.add_toplist_text);
-                    final String text = text_field.getText().toString();
-                    final String url = page_url[0];
-                    final String room = Base32.toBase32Z(url);
-
-                    Request request = new Request.Builder()
-                            .url(config.server + "/metacom/room_info/" + room )
-                            .build();
-
-                    new OkHttpClient().newCall(request)
-                            .enqueue(new Callback() {
-                                         @Override
-                                         public void onFailure(final Call call, IOException e) {
-                                             // Error
-                                         }
-                                         @Override
-                                         public void onResponse(Call call, final Response response) throws IOException {
-                                             String result = response.body().string();
-
-                                             try {
-                                                 final JSONObject json = new JSONObject(result);
-                                                 if(json.optString("count").equals("0") || json.optString("count").equals("")){
-
-                                                     try {
-                                                         WebSocket ws = new WebSocketFactory()
-                                                                 .setConnectionTimeout(timeout)
-                                                                 .createSocket(server+"/chat/"+room)
-                                                                 .addExtension(WebSocketExtension.PERMESSAGE_DEFLATE)
-                                                                 .connect();
-                                                         ws.sendText("{\"action\": \"post\", \"text\": \"" + text + "\", \"token\": \"" + token + "\"}");
-                                                         Intent startIntent = new Intent(activity.this, com.project.metacom.toplist.activity.class);
-                                                         startActivity(startIntent);
-
-                                                     } catch (WebSocketException e) {
-                                                         e.printStackTrace();
-                                                     } ;
-                                                 }else{
-                                                     new AlertDialog.Builder(activity.this)
-                                                             .setTitle("This room already exist")
-                                                             .setMessage("Do you want to go there?")
-
-                                                             // Specifying a listener allows you to take an action before dismissing the dialog.
-                                                             // The dialog is automatically dismissed when a dialog button is clicked.
-                                                             .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                                                                 public void onClick(DialogInterface dialog, int which) {
-                                                                     Intent startIntent = new Intent(activity.this, com.project.metacom.comments.activity.class);
-                                                                     startIntent.putExtra("go_to", room);
-                                                                     startIntent.putExtra("page_title", json.optString("title"));
-                                                                     startActivity(startIntent);
-                                                                 }
-                                                             })
-                                                             // A null listener allows the button to dismiss the dialog and take no further action.
-                                                             .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
-                                                                 public void onClick(DialogInterface dialog, int which) {
-                                                                     Intent startIntent = new Intent(activity.this, com.project.metacom.toplist.activity.class);
-                                                                     startActivity(startIntent);
-                                                                 }
-                                                             })
-                                                             .setIcon(android.R.drawable.ic_dialog_alert)
-                                                             .show();
-                                                 }
-
-                                             } catch (JSONException e) {
-                                                 e.printStackTrace();
-                                             }
-                                         }
-                                     });
-
-
-                }
-            });
-
-
-
-
-            // web view settings
-            WebViewClient wc = new WebViewClient()
-            {
-                @Override
-                public void onPageStarted(WebView view, String url, Bitmap favicon) {
-                    super.onPageStarted(view, url, favicon);
-                    page_url[0] = url;
-                    Log.d("WebView", "your current url when webpage loading.." + url);
-                }
-
-                @Override
-                public void onPageFinished(WebView view, String url) {
-                    Log.d("WebView", "your current url when webpage loading.. finish" + url);
-                    super.onPageFinished(view, url);
-                }
-
-                @Override
-                public void onLoadResource(WebView view, String url) {
-                    // TODO Auto-generated method stub
-                    super.onLoadResource(view, url);
-                }
-                @Override
-                public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                    System.out.println("when you click on any interlink on webview that time you got url :-" + url);
-                    return super.shouldOverrideUrlLoading(view, url);
-                }
-            };
-
-            WebView webView = (WebView) findViewById(R.id.toplist_webView);
-            webView.setWebViewClient(wc);
-
-            webView.getSettings().setJavaScriptEnabled(true);
-            webView.getSettings().setBuiltInZoomControls(true);
-            webView.getSettings().setSupportZoom(true);
-
-            webView.setScrollBarStyle(WebView.SCROLLBARS_OUTSIDE_OVERLAY);
-            webView.setScrollbarFadingEnabled(false);
-
-            webView.loadUrl("https://www.google.com");
-
+            Intent startIntent = new Intent(activity.this, com.project.metacom.web_view.activity.class);
+            startActivity(startIntent);
             return true;
         }
 
