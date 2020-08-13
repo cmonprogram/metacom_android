@@ -20,20 +20,20 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
+import static com.project.metacom.config.my_id;
+
 public class DataReceiver_toplistitem {
 
     DataAdapter data_adapter;
     public Boolean show  = false;
 
-
     public DataReceiver_toplistitem(DataAdapter data_adapter){
         this.data_adapter = data_adapter;
     }
-
-    public void execute() throws IOException {
+    public void get_func(String url) throws IOException {
 
         Request request = new Request.Builder()
-                .url(config.server + "/metacom/chat/get_top")
+                .url(config.server + url)
                 .build();
 
         new OkHttpClient().newCall(request)
@@ -53,20 +53,8 @@ public class DataReceiver_toplistitem {
                             jArray = new JSONArray(result);
                             for (int i=0; i < jArray.length(); i++)
                             {
-
                                 JSONObject oneObject = jArray.getJSONObject(i);
-
-                                final TopListItem data = new TopListItem();
-                                String tmp_result = oneObject.optString("chat_room");
-                                byte[] byte_result = Base32.fromBase32Z(tmp_result);
-
-                                data.chat_room = tmp_result;
-                                data.url = new String(byte_result, "UTF-8");
-                                if(data.url.length() >= 60)
-                                    data.url = data.url.substring(0,60) + "..";
-                                data.page_title =  oneObject.optString("title");
-                                data.count = oneObject.optString("count");
-
+                                final TopListItem data = new TopListItem().fromJson(oneObject);
                                 Activity a = (Activity)data_adapter.getContext();
                                 a.runOnUiThread(new Runnable() {
                                     @Override
@@ -80,7 +68,43 @@ public class DataReceiver_toplistitem {
                         }
                     }
                 });
-        //Top_chart mt = new Top_chart();
-        //mt.execute();
+    }
+
+    public class all{
+        private String url_get = "/metacom/chat/get_top";
+        private String url_search = "/metacom/room_search";
+        public void get() throws IOException {
+            reset();
+            get_func(url_get);
+        }
+        public void search(String req) throws IOException {
+            reset();
+            get_func(url_search+"?item_id="+req);
+        }
+    }
+
+    public class my{
+        private String url_get = "/metacom/get_last/" + my_id;
+        private String url_search = "/metacom/room_search/" + my_id;
+        public void get() throws IOException {
+            reset();
+            get_func(url_get);
+        }
+        public void search(String req) throws IOException {
+            reset();
+            get_func(url_search+"?item_id="+req);
+        }
+    }
+
+
+
+    public void reset(){
+        Activity a = (Activity)data_adapter.getContext();
+        a.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                data_adapter.clear();
+                data_adapter.notifyDataSetChanged(); }
+        });
     }
 }

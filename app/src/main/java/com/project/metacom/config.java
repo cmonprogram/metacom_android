@@ -17,6 +17,7 @@ public class config {
     public static final String server = "http://109.196.164.38";
     public static final int timeout = 5000;
     public static String token = "";
+    public static String my_id = "";
 
     public static final MediaType JSON_HEADER = MediaType.parse("application/json; charset=utf-8");
 

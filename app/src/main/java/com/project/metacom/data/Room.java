@@ -19,6 +19,13 @@ public class Room {
     public String url;
     public String title;
 
+    public Room fromJson(JSONObject oneObject) {
+        this.count = oneObject.optString("count");
+        this.url = oneObject.optString("url");
+        this.title = oneObject.optString("title");
+        return this;
+    }
+
     public Room fromid(String id) {
         this.id = id;
         Request request = new Request.Builder()

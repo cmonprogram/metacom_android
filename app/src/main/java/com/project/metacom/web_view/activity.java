@@ -12,6 +12,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -61,11 +62,8 @@ public class activity extends AppCompatActivity {
             }
         });
         thread.start();
-        try {
-            thread.join();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        //thread.join();
+
         setContentView(R.layout.toplist_layout_site_tab);
 
         // web view page url
@@ -76,11 +74,14 @@ public class activity extends AppCompatActivity {
         submit_button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
-                EditText text_field = (EditText) findViewById(R.id.add_toplist_text);
-                final String text = text_field.getText().toString();
+                //EditText text_field = (EditText) findViewById(R.id.add_toplist_text);
+                //final String text = text_field.getText().toString();
                 final String url = page_url[0];
                 final String room = Base32.toBase32Z(url);
-
+                Intent startIntent = new Intent(activity.this, com.project.metacom.comments.activity.class);
+                startIntent.putExtra("go_to", room);
+                startActivity(startIntent);
+ /*
                 Request request = new Request.Builder()
                         .url(config.server + "/metacom/room_info/" + room )
                         .build();
@@ -97,8 +98,9 @@ public class activity extends AppCompatActivity {
 
                                 try {
                                     final JSONObject json = new JSONObject(result);
-                                    if(json.optString("count").equals("0") || json.optString("count").equals("")){
 
+
+                                    if(json.optString("count").equals("0") || json.optString("count").equals("")){
                                         try {
                                             WebSocket ws = new WebSocketFactory()
                                                     .setConnectionTimeout(timeout)
@@ -112,6 +114,8 @@ public class activity extends AppCompatActivity {
                                         } catch (WebSocketException e) {
                                             e.printStackTrace();
                                         } ;
+
+
                                     }else{
                                         activity.this.runOnUiThread(new Runnable() {
                                             public void run() {
@@ -139,12 +143,13 @@ public class activity extends AppCompatActivity {
                                         });
                                     }
 
+
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }
                             }
                         });
-
+ */
 
             }
         });
@@ -155,9 +160,11 @@ public class activity extends AppCompatActivity {
         // web view settings
         WebViewClient wc = new WebViewClient()
         {
+            private ProgressBar progressBar = (ProgressBar) findViewById(R.id.toplist_progressBar);
             @Override
             public void onPageStarted(WebView view, String url, Bitmap favicon) {
                 super.onPageStarted(view, url, favicon);
+                progressBar.setVisibility(View.VISIBLE);
                 page_url[0] = url;
                 Log.d("WebView", "your current url when webpage loading.." + url);
             }
@@ -166,6 +173,7 @@ public class activity extends AppCompatActivity {
             public void onPageFinished(WebView view, String url) {
                 Log.d("WebView", "your current url when webpage loading.. finish" + url);
                 super.onPageFinished(view, url);
+                progressBar.setVisibility(View.GONE);
             }
 
             @Override
@@ -184,7 +192,6 @@ public class activity extends AppCompatActivity {
         webView.setWebViewClient(wc);
 
         webView.getSettings().setJavaScriptEnabled(true);
-        webView.getSettings().setBuiltInZoomControls(true);
         webView.getSettings().setSupportZoom(true);
 
         webView.setScrollBarStyle(WebView.SCROLLBARS_OUTSIDE_OVERLAY);

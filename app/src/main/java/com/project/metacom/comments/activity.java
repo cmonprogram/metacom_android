@@ -26,6 +26,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.concurrent.ExecutionException;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -38,19 +39,32 @@ import static functions.CheckMe.checkMe;
 import static functions.CheckMe.checkMe_dialog;
 
 public class activity extends AppCompatActivity {
-    private Room room;
+    public Room room;
+
+    public void set_room(final Room room){
+        this.room = room;
+        this.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                setTitle(room.title);
+            }
+        });
+
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        room = new Room().fromid(getIntent().getStringExtra("go_to"));
-
-        setContentView(R.layout.comment_layout);
-        RecyclerView data_target = (RecyclerView) findViewById(R.id.comments);
-        setTitle(room.title);
+        setTitle("");
 
         // enable toolbar
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
+
+        setContentView(R.layout.comment_layout);
+
+        try {
+        RecyclerView data_target = (RecyclerView) findViewById(R.id.comments);
 
         // use this setting to improve performance if you know that changes
         // in content do not change the layout size of the RecyclerView
@@ -64,8 +78,9 @@ public class activity extends AppCompatActivity {
         data_target.setAdapter(data_adapter);
 
         final DataReceiver_comment data_receiver_comment = new DataReceiver_comment(data_adapter);
-        data_receiver_comment.execute(room.id);
+        data_receiver_comment.execute(getIntent().getStringExtra("go_to"));
 
+        //this.room = data_receiver_comment.room;
 
 
         // input event
@@ -119,6 +134,10 @@ public class activity extends AppCompatActivity {
             }
         });
         */
+        } catch (Exception e) {
+            setTitle("Room cannot be created");
+            e.printStackTrace();
+        }
     }
 
     class view extends View {

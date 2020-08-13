@@ -9,6 +9,7 @@ import com.neovisionaries.ws.client.WebSocketException;
 import com.neovisionaries.ws.client.WebSocketExtension;
 import com.neovisionaries.ws.client.WebSocketFactory;
 import com.project.metacom.data.Comment;
+import com.project.metacom.data.Room;
 import com.project.metacom.data.User;
 
 import org.json.JSONArray;
@@ -28,9 +29,7 @@ public class DataReceiver_comment extends AsyncTask<String, Integer, Void> {
     DataAdapter data_adapter;
     DataReceiver_user data_receiver_user;
     public WebSocket ws;
-    public Boolean show  = false;
-
-
+    public Room room;
     public DataReceiver_comment(DataAdapter data_adapter){
         this.data_adapter = data_adapter;
         this.data_receiver_user = new DataReceiver_user(data_adapter);
@@ -38,7 +37,7 @@ public class DataReceiver_comment extends AsyncTask<String, Integer, Void> {
 
 
     @Override
-    protected Void doInBackground(String... urls) {
+    protected Void doInBackground(final String... urls) {
             try {
                 this.ws = new WebSocketFactory()
                         .setConnectionTimeout(timeout)
@@ -49,11 +48,14 @@ public class DataReceiver_comment extends AsyncTask<String, Integer, Void> {
                                 JSONObject json = null;
                                 JSONArray jArray = null;
                                 try {
-
                                     json = new JSONObject(message);
                                     String action = json.getString("action");
-
-                                    if (Objects.equals(action, "get_history")){
+                                    if(Objects.equals(action, "room_info")){
+                                        room = new Room().fromJson(json);
+                                        room.id = urls[0];
+                                        activity a = (activity) data_adapter.getContext();
+                                        a.set_room(room);
+                                    } else if (Objects.equals(action, "get_history")){
                                         jArray = new JSONArray(json.getString("data"));
                                     for (int i = 0; i < jArray.length(); i++) {
                                         JSONObject oneObject = jArray.getJSONObject(i);
@@ -68,7 +70,7 @@ public class DataReceiver_comment extends AsyncTask<String, Integer, Void> {
                                         add_comment(comment,0);
                                 }
 
-                                } catch (JSONException e) {
+                                } catch (Exception e) {
                                     e.printStackTrace();
                                 }
                             }
@@ -79,10 +81,18 @@ public class DataReceiver_comment extends AsyncTask<String, Integer, Void> {
                 e.printStackTrace();
             }
 
+        ws.sendText("{\"action\": \"room_info\"}");
         ws.sendText("{\"action\": \"get_history\", \"token\": \""+token+"\"}");
         return null;
     }
-
+/*
+    @Override
+    protected void onPostExecute(Void result) {
+        super.onPostExecute(result);
+        activity a = (activity) data_adapter.getContext();
+        a.set_room(room);
+    }
+*/
     private void add_comment(final Comment comment, final Integer index){
         Activity a = (Activity) data_adapter.getContext();
         a.runOnUiThread(new Runnable() {
