@@ -10,6 +10,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,8 +18,13 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.textfield.TextInputEditText;
+import com.neovisionaries.ws.client.WebSocket;
+import com.neovisionaries.ws.client.WebSocketAdapter;
+import com.neovisionaries.ws.client.WebSocketExtension;
+import com.neovisionaries.ws.client.WebSocketFactory;
 import com.project.metacom.R;
 import com.project.metacom.config;
+import com.project.metacom.data.Comment;
 import com.project.metacom.data.Room;
 
 import org.json.JSONArray;
@@ -26,6 +32,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.Objects;
 import java.util.concurrent.ExecutionException;
 
 import okhttp3.Call;
@@ -34,13 +41,17 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
+import static com.project.metacom.config.server;
+import static com.project.metacom.config.timeout;
 import static com.project.metacom.config.token;
 import static functions.CheckMe.checkMe;
 import static functions.CheckMe.checkMe_dialog;
 
 public class activity extends AppCompatActivity {
-    public Room room;
+    public DataReceiver_comment data_receiver_comment;
+    public DataReceiver_user data_receiver_user;
 
+    public Room room;
     public void set_room(final Room room){
         this.room = room;
         this.runOnUiThread(new Runnable() {
@@ -75,15 +86,17 @@ public class activity extends AppCompatActivity {
         data_target.setLayoutManager(layoutManager);
 
         final DataAdapter data_adapter = new DataAdapter(this);
-        data_target.setAdapter(data_adapter);
 
-        final DataReceiver_comment data_receiver_comment = new DataReceiver_comment(data_adapter);
+        data_receiver_comment = new DataReceiver_comment(data_adapter);
         data_receiver_comment.execute(getIntent().getStringExtra("go_to"));
+        data_receiver_user = data_receiver_comment.data_receiver_user;
+        data_target.setAdapter(data_adapter);
 
         //this.room = data_receiver_comment.room;
 
 
         // input event
+
         TextInputEditText editText = (TextInputEditText) findViewById(R.id.send);
         editText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
@@ -105,7 +118,6 @@ public class activity extends AppCompatActivity {
                                         v.setText("");
                                     }
                                 });
-
                             }else{
                                 checkMe_dialog( activity.this);
                                 /*

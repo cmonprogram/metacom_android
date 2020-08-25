@@ -139,7 +139,6 @@ public class activity extends AppCompatActivity {
                                 if (!checkMe()) {
                                     show_login(data_target,go_to_login);
                                     //checkMe_dialog(activity.this);
-
                                 } else {
                                     hide_login(data_target,go_to_login);
                                     try {

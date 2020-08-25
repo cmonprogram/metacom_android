@@ -12,6 +12,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
 import androidx.appcompat.app.AlertDialog;
@@ -53,34 +54,47 @@ public class activity extends AppCompatActivity {
         //getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         view cv = new view(this);
-        Thread thread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                if(!checkMe()) {
-                    checkMe_dialog( activity.this);
-                }
-            }
-        });
-        thread.start();
-        //thread.join();
 
         setContentView(R.layout.toplist_layout_site_tab);
 
-        // web view page url
-        final String[] page_url = {null};
-
-        // submit dialog
-        Button submit_button = (Button) findViewById(R.id.add_toplist_submit);
-        submit_button.setOnClickListener(new View.OnClickListener() {
+        final LinearLayout content_page = (LinearLayout)findViewById(R.id.toplist_webView_content);
+        final LinearLayout go_to_login = (LinearLayout)findViewById(R.id.toplist_go_to_login);
+        final Button go_to_login_button = (Button)findViewById(R.id.go_to_login);
+        go_to_login_button.setOnClickListener(new View.OnClickListener() {
+            @Override
             public void onClick(View v) {
-
-                //EditText text_field = (EditText) findViewById(R.id.add_toplist_text);
-                //final String text = text_field.getText().toString();
-                final String url = page_url[0];
-                final String room = Base32.toBase32Z(url);
-                Intent startIntent = new Intent(activity.this, com.project.metacom.comments.activity.class);
-                startIntent.putExtra("go_to", room);
+                Intent startIntent = new Intent(activity.this, com.project.metacom.login.activity.class);
                 startActivity(startIntent);
+            }
+        });
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+
+                if (!checkMe()) {
+                    show_login(content_page,go_to_login);
+                } else {
+
+                    hide_login(content_page,go_to_login);
+                    // web view page url
+                    final String[] page_url = {null};
+
+                    // submit dialog
+                    Button submit_button = (Button) findViewById(R.id.add_toplist_submit);
+                    submit_button.setOnClickListener(new View.OnClickListener() {
+                        public void onClick(View v) {
+
+                            //EditText text_field = (EditText) findViewById(R.id.add_toplist_text);
+                            //final String text = text_field.getText().toString();
+                            final String url = page_url[0];
+                            final String room = Base32.toBase32Z(url);
+                            Intent startIntent = new Intent(activity.this, com.project.metacom.comments.activity.class);
+                            startIntent.putExtra("go_to", room);
+                            startActivity(startIntent);
  /*
                 Request request = new Request.Builder()
                         .url(config.server + "/metacom/room_info/" + room )
@@ -151,54 +165,56 @@ public class activity extends AppCompatActivity {
                         });
  */
 
+                        }
+                    });
+
+
+                    // web view settings
+                    WebViewClient wc = new WebViewClient() {
+                        private ProgressBar progressBar = (ProgressBar) findViewById(R.id.toplist_progressBar);
+
+                        @Override
+                        public void onPageStarted(WebView view, String url, Bitmap favicon) {
+                            super.onPageStarted(view, url, favicon);
+                            progressBar.setVisibility(View.VISIBLE);
+                            page_url[0] = url;
+                            Log.d("WebView", "your current url when webpage loading.." + url);
+                        }
+
+                        @Override
+                        public void onPageFinished(WebView view, String url) {
+                            Log.d("WebView", "your current url when webpage loading.. finish" + url);
+                            super.onPageFinished(view, url);
+                            progressBar.setVisibility(View.GONE);
+                        }
+
+                        @Override
+                        public void onLoadResource(WebView view, String url) {
+                            // TODO Auto-generated method stub
+                            super.onLoadResource(view, url);
+                        }
+
+                        @Override
+                        public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                            System.out.println("when you click on any interlink on webview that time you got url :-" + url);
+                            return super.shouldOverrideUrlLoading(view, url);
+                        }
+                    };
+
+                    WebView webView = (WebView) findViewById(R.id.toplist_webView);
+                    webView.setWebViewClient(wc);
+
+                    webView.getSettings().setJavaScriptEnabled(true);
+                    webView.getSettings().setSupportZoom(true);
+
+                    webView.setScrollBarStyle(WebView.SCROLLBARS_OUTSIDE_OVERLAY);
+                    webView.setScrollbarFadingEnabled(false);
+
+                    webView.loadUrl("https://www.google.com");
+                }
             }
         });
-
-
-
-
-        // web view settings
-        WebViewClient wc = new WebViewClient()
-        {
-            private ProgressBar progressBar = (ProgressBar) findViewById(R.id.toplist_progressBar);
-            @Override
-            public void onPageStarted(WebView view, String url, Bitmap favicon) {
-                super.onPageStarted(view, url, favicon);
-                progressBar.setVisibility(View.VISIBLE);
-                page_url[0] = url;
-                Log.d("WebView", "your current url when webpage loading.." + url);
-            }
-
-            @Override
-            public void onPageFinished(WebView view, String url) {
-                Log.d("WebView", "your current url when webpage loading.. finish" + url);
-                super.onPageFinished(view, url);
-                progressBar.setVisibility(View.GONE);
-            }
-
-            @Override
-            public void onLoadResource(WebView view, String url) {
-                // TODO Auto-generated method stub
-                super.onLoadResource(view, url);
-            }
-            @Override
-            public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                System.out.println("when you click on any interlink on webview that time you got url :-" + url);
-                return super.shouldOverrideUrlLoading(view, url);
-            }
-        };
-
-        WebView webView = (WebView) findViewById(R.id.toplist_webView);
-        webView.setWebViewClient(wc);
-
-        webView.getSettings().setJavaScriptEnabled(true);
-        webView.getSettings().setSupportZoom(true);
-
-        webView.setScrollBarStyle(WebView.SCROLLBARS_OUTSIDE_OVERLAY);
-        webView.setScrollbarFadingEnabled(false);
-
-        webView.loadUrl("https://www.google.com");
-
+        thread.start();
     }
 
 
@@ -208,5 +224,25 @@ public class activity extends AppCompatActivity {
             super(context);
         }
     }
+    private void show_login(final LinearLayout data_target, final LinearLayout go_to_login){
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                data_target.setVisibility(View.GONE);
+                go_to_login.setVisibility(View.VISIBLE);
+            }
+        });
+        //getSupportFragmentManager().beginTransaction().add(R.id.toplist_content_frame, fragment).commit();
+    }
 
+    private void hide_login(final LinearLayout data_target, final LinearLayout go_to_login){
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                data_target.setVisibility(View.VISIBLE);
+                go_to_login.setVisibility(View.GONE);
+            }
+        });
+        //getSupportFragmentManager().beginTransaction().remove(fragment).commit();
+    }
 }

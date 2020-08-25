@@ -68,6 +68,14 @@ public class DataReceiver_comment extends AsyncTask<String, Integer, Void> {
                                         final Comment comment = new Comment().fromJson(json);
                                         comment.user = data_receiver_user.check(comment.user_id);
                                         add_comment(comment,0);
+                                }else if(Objects.equals(action, "like")){
+                                    json = new JSONObject(message);
+                                    String id = json.getString("id");
+                                    like(id);
+                                }else if(Objects.equals(action, "dislike")){
+                                    json = new JSONObject(message);
+                                    String id = json.getString("id");
+                                    dislike(id);
                                 }
 
                                 } catch (Exception e) {
@@ -93,6 +101,28 @@ public class DataReceiver_comment extends AsyncTask<String, Integer, Void> {
         a.set_room(room);
     }
 */
+private void like(final String id) {
+    Activity a = (Activity) data_adapter.getContext();
+    a.runOnUiThread(new Runnable() {
+        @Override
+        public void run() {
+            data_adapter.like(id);
+            data_adapter.notifyDataSetChanged();
+        }
+    });
+}
+
+
+private void dislike(final String id) {
+    Activity a = (Activity) data_adapter.getContext();
+    a.runOnUiThread(new Runnable() {
+        @Override
+        public void run() {
+            data_adapter.dislike(id);
+            data_adapter.notifyDataSetChanged();
+        }
+    });
+}
     private void add_comment(final Comment comment, final Integer index){
         Activity a = (Activity) data_adapter.getContext();
         a.runOnUiThread(new Runnable() {

@@ -17,7 +17,14 @@
         android:layout_weight="10"
         />
     -->
-    <RelativeLayout
+<LinearLayout
+        android:id="@+id/toplist_webView_content"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical"
+        android:visibility="gone"
+        >
+<RelativeLayout
     android:layout_width="fill_parent"
     android:layout_height="60dp"
     android:orientation="vertical"
@@ -39,12 +46,36 @@
         android:layout_centerInParent="true" />
 
 </RelativeLayout>
-    <Button
-        android:id="@+id/add_toplist_submit"
+        <Button
+            android:id="@+id/add_toplist_submit"
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:layout_weight="10"
+            android:text="Submit" />
+</LinearLayout>
+
+
+
+    <LinearLayout
+        android:id="@+id/toplist_go_to_login"
         android:layout_width="match_parent"
-        android:layout_height="20dp"
-        android:layout_weight="10"
-        android:text="Submit" />
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone">
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Please be login to do this" />
+
+        <Button
+            android:id="@+id/go_to_login"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="login" />
+    </LinearLayout>
 </LinearLayout>
 
 
