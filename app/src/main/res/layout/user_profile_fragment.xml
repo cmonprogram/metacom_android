@@ -67,56 +67,54 @@
         android:layout_height="wrap_content">
 
         <ImageButton
-            android:id="@+id/commentary_like"
+            android:id="@+id/user_like"
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_marginLeft="15dp"
             android:src="@drawable/ic_arrow_drop_up_black_64dp" />
 
         <TextView
-            android:id="@+id/likes_text_view"
+            android:id="@+id/user_likes_text_view"
             style="@style/TextView.Primary.Bold"
             android:layout_marginLeft="5dp"
-            android:layout_toEndOf="@+id/commentary_like"
             android:text="0" />
         <ProgressBar
             android:id="@+id/progressBar"
             android:layout_weight="60"
             style="?android:attr/progressBarStyleHorizontal"
-            android:layout_below="@id/commentary_text_view"
-            android:layout_toEndOf="@+id/likes_text_view"
             android:layout_marginLeft="15dp"
             android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:progress="50"/>
         <ImageButton
-            android:id="@+id/commentary_dislike"
+            android:id="@+id/user_dislike"
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_marginLeft="15dp"
-            android:layout_below="@id/commentary_text_view"
-            android:layout_toEndOf="@+id/progressBar"
+
             android:src="@drawable/ic_arrow_drop_down_black_64dp" />
         <TextView
-            android:id="@+id/dislikes_text_view"
+            android:id="@+id/user_dislikes_text_view"
             style="@style/TextView.Primary.Bold"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="15dp"
-            android:layout_below="@id/commentary_text_view"
-            android:layout_toEndOf="@+id/commentary_dislike"
             android:text="0" />
 
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="horizontal">
-
+        android:orientation="vertical">
         <TextView
             android:id="@+id/textView4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:text="Last activity:" />
+        <ListView
+            android:id="@+id/user_explist_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+        </ListView>
+
     </LinearLayout>
 </LinearLayout>

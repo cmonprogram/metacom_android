@@ -40,6 +40,13 @@
             android:name=".comments.activity">
         </activity>
 
+        <activity
+            android:name=".activitylist.activity">
+        </activity>
+
+        <activity
+            android:name=".settings.activity">
+        </activity>
     </application>
 
 </manifest>

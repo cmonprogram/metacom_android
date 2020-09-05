@@ -12,6 +12,8 @@ import com.project.metacom.data.TopListItem;
 
 import java.util.ArrayList;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class DataAdapter extends ArrayAdapter {
 
     public DataAdapter(Context context, ArrayList<TopListItem> array) {
@@ -30,8 +32,11 @@ public class DataAdapter extends ArrayAdapter {
         }
         TextView val1 = (TextView) convertView.findViewById(R.id.title);
         TextView val2 = (TextView) convertView.findViewById(R.id.count);
+        CircleImageView val3 = (CircleImageView) convertView.findViewById(R.id.toplist_item_image_view);
+
         val1.setText(obj.page_title + "\n" + obj.url);
         val2.setText(obj.count);
+        val3.setImageBitmap(obj.icon);
         return convertView;
     }
 }

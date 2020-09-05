@@ -88,7 +88,6 @@ public class CheckMe {
                             .setIcon(android.R.drawable.ic_dialog_alert)
                             .show();
 
-
             }
         };
 

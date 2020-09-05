@@ -2,6 +2,7 @@ package com.project.metacom.comments;
 
 import com.project.metacom.config;
 import com.project.metacom.data.User;
+import com.project.metacom.data.User_stats;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -56,5 +57,6 @@ public class DataReceiver_user {
 
         return null;
     }
+
 
 }

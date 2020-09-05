@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.os.Bundle;
 import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,12 +20,14 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.neovisionaries.ws.client.WebSocket;
 import com.project.metacom.R;
 import com.project.metacom.data.Comment;
 import com.project.metacom.data.User;
+import com.project.metacom.fragment.user_profile_fragment;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -35,7 +38,7 @@ import java.util.ListIterator;
 import static com.project.metacom.config.token;
 
 public class DataAdapter extends RecyclerView.Adapter<DataAdapter.DataAdapterViewHolder> {
-    public List<Comment> Dataset = new ArrayList<Comment>();
+    public List<Comment> CommentBase = new ArrayList<Comment>();
     public List<User> UserBase = new ArrayList<User>();
     private activity context;
 
@@ -76,7 +79,7 @@ public class DataAdapter extends RecyclerView.Adapter<DataAdapter.DataAdapterVie
     }
 
     private Comment search_comment_by_id(String id) {
-        for (Comment comment : Dataset) {
+        for (Comment comment : CommentBase) {
             if(comment.id.equals(id)){
                 return comment;
             }
@@ -127,7 +130,7 @@ public class DataAdapter extends RecyclerView.Adapter<DataAdapter.DataAdapterVie
         try {
             // - get element from your dataset at this position
             // - replace the contents of the view with that element
-            final Comment comment = Dataset.get(position);
+            final Comment comment = CommentBase.get(position);
 
             if (comment.likes.equals("null")) comment.likes = "0";
             if (comment.dislikes.equals("null")) comment.dislikes = "0";
@@ -169,6 +172,21 @@ public class DataAdapter extends RecyclerView.Adapter<DataAdapter.DataAdapterVie
             holder.commentaryDislike.setOnClickListener(dislike_event);
             //holder.dislikesTextView.setOnClickListener(dislike_event);
 
+            holder.userImageView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Bundle bundle = new Bundle();
+                    bundle.putString("user_id", comment.user_id );
+
+                    user_profile_fragment fragInfo = new user_profile_fragment();
+                    fragInfo.setArguments(bundle);
+                    FragmentTransaction transaction = context.getSupportFragmentManager().beginTransaction();
+                    transaction.replace(R.id.user_profile_conteiner, fragInfo);
+                    transaction.addToBackStack(null);
+                    transaction.commit();
+                    context.findViewById(R.id.user_profile_conteiner).setVisibility(View.VISIBLE);
+                }
+            });
         }catch (Exception e){
             holder = null;
         }
@@ -178,6 +196,6 @@ public class DataAdapter extends RecyclerView.Adapter<DataAdapter.DataAdapterVie
     // Return the size of your dataset (invoked by the layout manager)
     @Override
     public int getItemCount() {
-        return Dataset.size();
+        return CommentBase.size();
     }
 }

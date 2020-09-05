@@ -79,7 +79,7 @@ public class activity extends AppCompatActivity {
                     show_login(content_page,go_to_login);
                 } else {
 
-                    hide_login(content_page,go_to_login);
+                    hide_login(content_page, go_to_login);
                     // web view page url
                     final String[] page_url = {null};
 
@@ -168,7 +168,8 @@ public class activity extends AppCompatActivity {
                         }
                     });
 
-
+                 activity.this.runOnUiThread(new Runnable() {
+                    public void run() {
                     // web view settings
                     WebViewClient wc = new WebViewClient() {
                         private ProgressBar progressBar = (ProgressBar) findViewById(R.id.toplist_progressBar);
@@ -211,6 +212,7 @@ public class activity extends AppCompatActivity {
                     webView.setScrollbarFadingEnabled(false);
 
                     webView.loadUrl("https://www.google.com");
+                }});
                 }
             }
         });

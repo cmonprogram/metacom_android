@@ -30,6 +30,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.tabs.TabLayout;
 import com.neovisionaries.ws.client.WebSocket;
 import com.neovisionaries.ws.client.WebSocketAdapter;
@@ -78,7 +79,6 @@ public class activity extends AppCompatActivity {
         //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         //getSupportActionBar().setDisplayShowHomeEnabled(true);
 
-        view cv = new view(this);
         setContentView(R.layout.toplist_layout);
         // RelativeLayout topList_layout= (RelativeLayout) findViewById(R.id.rl);
         // topList_layout.addView(cv);
@@ -159,6 +159,25 @@ public class activity extends AppCompatActivity {
 
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
+            }
+        });
+
+        BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.action_news:
+                        startActivity(new Intent(activity.this, com.project.metacom.toplist.activity.class));
+                        break;
+                    case R.id.action_activity:
+                        startActivity(new Intent(activity.this, com.project.metacom.activitylist.activity.class));
+                        break;
+                    case R.id.action_settings:
+                        startActivity(new Intent(activity.this, com.project.metacom.settings.activity.class));
+                        break;
+                }
+                return true;
             }
         });
 
@@ -258,10 +277,5 @@ public class activity extends AppCompatActivity {
         //getSupportFragmentManager().beginTransaction().remove(fragment).commit();
     }
 
-    class view extends View {
-        public view(Context context) {
-            super(context);
-        }
-    }
 
 }

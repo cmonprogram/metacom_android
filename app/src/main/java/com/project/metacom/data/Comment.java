@@ -26,7 +26,7 @@ public class Comment {
         // date
         String timeStampString = oneObject.optString("time");
         if(timeStampString != null) {
-            long timeStamp = Long.parseLong(timeStampString);
+            long timeStamp = (int) Double.parseDouble(timeStampString);
             Date date = new Date(timeStamp * 1000L);
             SimpleDateFormat sdf = new SimpleDateFormat("d MMMM HH:mm");
             sdf.setTimeZone(TimeZone.getDefault());

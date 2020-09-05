@@ -96,8 +96,7 @@
             android:id="@+id/toplist_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingBottom="56dp"
-            ></ListView>
+            android:paddingBottom="56dp" />
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/bottom_navigation"

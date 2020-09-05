@@ -130,11 +130,11 @@ private void dislike(final String id) {
             public void run() {
                 if(index == null) {
                     //int length = data_adapter.getItemCount();
-                    data_adapter.Dataset.add(comment);
+                    data_adapter.CommentBase.add(comment);
                     data_adapter.notifyDataSetChanged();
                     //data_adapter.notifyItemInserted(length);
                 }else{
-                    data_adapter.Dataset.add(index,comment);
+                    data_adapter.CommentBase.add(index,comment);
                     data_adapter.notifyDataSetChanged();
                 }
             }

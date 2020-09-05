@@ -23,6 +23,7 @@ import com.neovisionaries.ws.client.WebSocketAdapter;
 import com.neovisionaries.ws.client.WebSocketExtension;
 import com.neovisionaries.ws.client.WebSocketFactory;
 import com.project.metacom.R;
+import com.project.metacom.Receiver;
 import com.project.metacom.config;
 import com.project.metacom.data.Comment;
 import com.project.metacom.data.Room;
@@ -50,7 +51,6 @@ import static functions.CheckMe.checkMe_dialog;
 public class activity extends AppCompatActivity {
     public DataReceiver_comment data_receiver_comment;
     public DataReceiver_user data_receiver_user;
-
     public Room room;
     public void set_room(final Room room){
         this.room = room;
@@ -60,7 +60,6 @@ public class activity extends AppCompatActivity {
                 setTitle(room.title);
             }
         });
-
     }
 
     @Override
@@ -90,13 +89,16 @@ public class activity extends AppCompatActivity {
         data_receiver_comment = new DataReceiver_comment(data_adapter);
         data_receiver_comment.execute(getIntent().getStringExtra("go_to"));
         data_receiver_user = data_receiver_comment.data_receiver_user;
+
+        Receiver.data_receiver_comment = data_receiver_comment;
+        Receiver.data_receiver_user = data_receiver_user;
+
         data_target.setAdapter(data_adapter);
 
         //this.room = data_receiver_comment.room;
 
 
         // input event
-
         TextInputEditText editText = (TextInputEditText) findViewById(R.id.send);
         editText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
@@ -152,11 +154,6 @@ public class activity extends AppCompatActivity {
         }
     }
 
-    class view extends View {
-        public view(Context context) {
-            super(context);
-        }
-    }
 
     // toolbar actions
     @Override
@@ -171,11 +168,12 @@ public class activity extends AppCompatActivity {
         // handle arrow click here
         int id = item.getItemId();
         if (id == android.R.id.home) {
-            Intent startIntent = new Intent(activity.this, com.project.metacom.toplist.activity.class);
-            startActivity(startIntent);
-            //finish(); // close this activity and return to preview activity (if there is any)
+            if(findViewById(R.id.user_profile_conteiner).getVisibility() == View.GONE) {
+                Intent startIntent = new Intent(activity.this, com.project.metacom.toplist.activity.class);
+                startActivity(startIntent);
+                //finish(); // close this activity and return to preview activity (if there is any)
+            }
         }
-
         if (id == R.id.action_goout_comment) {
             Intent i = new Intent(Intent.ACTION_VIEW);
             i.setData(Uri.parse(room.url));
