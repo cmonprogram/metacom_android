@@ -50,6 +50,13 @@ public class activity extends AppCompatActivity {
         // RelativeLayout topList_layout= (RelativeLayout) findViewById(R.id.rl);
         // topList_layout.addView(cv);
 
+
+
+
+
+
+
+
         BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override

@@ -1,41 +1,113 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:orientation="vertical">
-    <com.google.android.material.tabs.TabLayout
-        android:id="@+id/activitylist_tabs"
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/user_image_view"
+        android:layout_gravity="center"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:src="@mipmap/ic_launcher"/>
+    <RelativeLayout
+        android:id="@+id/commentRelativeLayout1"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        android:layout_toRightOf="@+id/user_image_view">
+        <TextView
+            android:id="@+id/user_name_text_view"
+            style="@style/TextView.Primary.Bold"
+            android:text="Username" />
+        <TextView
+            android:id="@+id/date_text_view"
+            style="@style/TextView.Secondary"
+
+            android:layout_below="@id/user_name_text_view"
+            android:text="Date" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/commentRelativeLayout2"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/user_image_view">
+
+        <ImageButton
+            android:id="@+id/commentary_like"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/ic_arrow_drop_up_black_64dp" />
+
+        <TextView
+            android:id="@+id/likes_text_view"
+            style="@style/TextView.Primary.Bold"
+            android:layout_marginLeft="5dp"
+            android:layout_toEndOf="@+id/commentary_like"
+            android:text="0" />
+
+        <ImageButton
+            android:id="@+id/commentary_dislike"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginLeft="15dp"
+            android:layout_toEndOf="@+id/likes_text_view"
+            android:src="@drawable/ic_arrow_drop_down_black_64dp" />
+
+        <TextView
+            android:id="@+id/dislikes_text_view"
+            style="@style/TextView.Primary.Bold"
+            android:layout_marginLeft="5dp"
+            android:layout_toEndOf="@+id/commentary_dislike"
+            android:text="0" />
+
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/commentRelativeLayout3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:orientation="vertical">
+
+
+
+    <LinearLayout
+        android:id="@+id/commentRelativeLayout4"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-        <com.google.android.material.tabs.TabItem
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Activity" />
-        <com.google.android.material.tabs.TabItem
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="My Subscribtions" />
 
-        <com.google.android.material.tabs.TabItem
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Users" />
-    </com.google.android.material.tabs.TabLayout>
-    <FrameLayout
-        android:id="@+id/activitylist_content_frame"
+     <TextView
+         android:id="@+id/s1"
+         android:layout_weight="2"
+         style="@style/TextView.Primary.Bold"
+         android:text="Font:" />
+
+    <SeekBar
+        android:id="@+id/seekBar"
+        android:layout_weight="3"
+        style="@style/Widget.AppCompat.SeekBar.Discrete"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:max="20"
+        android:progress="3" />
+    </LinearLayout>
+
+
+    </LinearLayout>
+
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottom_navigation"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <ListView
-            android:id="@+id/activitylist_view"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingBottom="56dp" />
-        <com.google.android.material.bottomnavigation.BottomNavigationView
-            android:id="@+id/bottom_navigation"
-            android:layout_width="match_parent"
-            android:layout_height="56dp"
-            android:layout_gravity="bottom"
-            app:menu="@menu/bottom_navigation_menu" >
-        </com.google.android.material.bottomnavigation.BottomNavigationView>
-    </FrameLayout>
+        android:layout_height="56dp"
+        android:layout_gravity="bottom"
+        app:menu="@menu/bottom_navigation_menu" >
+    </com.google.android.material.bottomnavigation.BottomNavigationView>
+
 </LinearLayout>
