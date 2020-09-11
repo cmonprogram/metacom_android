@@ -37,11 +37,10 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
+import static com.project.metacom.config.me;
 import static com.project.metacom.config.server;
 import static com.project.metacom.config.timeout;
-import static com.project.metacom.config.token;
-import static functions.CheckMe.checkMe;
-import static functions.CheckMe.checkMe_dialog;
+
 
 public class activity extends AppCompatActivity {
 
@@ -75,7 +74,7 @@ public class activity extends AppCompatActivity {
             @Override
             public void run() {
 
-                if (!checkMe()) {
+                if (!me.checkMe()) {
                     show_login(content_page,go_to_login);
                 } else {
 

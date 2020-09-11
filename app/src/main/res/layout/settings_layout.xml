@@ -37,6 +37,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/user_image_view">
 
+
         <ImageButton
             android:id="@+id/commentary_like"
             android:layout_width="20dp"
@@ -84,30 +85,53 @@
 
      <TextView
          android:id="@+id/s1"
-         android:layout_weight="2"
+         android:layout_weight="1"
          style="@style/TextView.Primary.Bold"
-         android:text="Font:" />
+         android:text="Font size:" />
 
     <SeekBar
         android:id="@+id/seekBar"
-        android:layout_weight="3"
+        android:layout_weight="9"
         style="@style/Widget.AppCompat.SeekBar.Discrete"
-        android:layout_width="200dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:max="20"
         android:progress="3" />
     </LinearLayout>
 
+        <LinearLayout
+            android:id="@+id/commentRelativeLayout5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/s3"
+                android:layout_weight="1"
+                style="@style/TextView.Primary.Bold"
+                android:text="Action Notifications:" />
+
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/commentRelativeLayout6"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/s6"
+                android:layout_weight="1"
+                style="@style/TextView.Primary.Bold"
+                android:text="Chat Notifications:" />
+
+
+
+        </LinearLayout>
 
     </LinearLayout>
 
 
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/bottom_navigation"
-        android:layout_width="match_parent"
-        android:layout_height="56dp"
-        android:layout_gravity="bottom"
-        app:menu="@menu/bottom_navigation_menu" >
-    </com.google.android.material.bottomnavigation.BottomNavigationView>
+
 
 </LinearLayout>

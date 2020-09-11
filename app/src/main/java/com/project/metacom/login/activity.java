@@ -32,15 +32,15 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
+import static com.project.metacom.config.me;
 import static com.project.metacom.config.server;
-import static functions.CheckMe.checkMe;
-import static functions.CheckMe.reset;
+
 
 public class activity  extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        view cv = new view(this);
+        me.reset();
         setContentView(R.layout.login_layout);
 
         //setTitle("Login");
@@ -74,8 +74,8 @@ public class activity  extends AppCompatActivity {
                             Response response = new OkHttpClient().newCall(request).execute();
                             String result = response.body().string();
                             JSONObject json  = new JSONObject(result);
-                            config.token = json.optString("access_token");
-                            if(checkMe()){
+                            me.token = json.optString("access_token");
+                            if(me.checkMe()){
                                 String room = getIntent().getStringExtra("go_to");
                                 if(room != null){
                                     Intent startIntent = new Intent(activity.this, com.project.metacom.comments.activity.class);
@@ -83,11 +83,11 @@ public class activity  extends AppCompatActivity {
                                     //startIntent.putExtra("page_title", getIntent().getStringExtra("page_title"));
                                     startActivity(startIntent);
                                 }else {
-                                    Intent startIntent = new Intent(activity.this, com.project.metacom.toplist.activity.class);
+                                    Intent startIntent = new Intent(activity.this, com.project.metacom.ActivityMain.class);
                                     startActivity(startIntent);
                                 }
                             }else {
-                                reset();
+                                me.reset();
                                 Runnable runnable = new Runnable() {
                                     public void run() {
                                         new AlertDialog.Builder(activity.this)
@@ -121,11 +121,5 @@ public class activity  extends AppCompatActivity {
     }
 
 
-
-    class view extends View {
-        public view(Context context) {
-            super(context);
-        }
-    }
 
 }

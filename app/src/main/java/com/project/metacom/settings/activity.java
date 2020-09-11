@@ -26,7 +26,6 @@ import com.project.metacom.toplist.DataReceiver_toplistitem;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import static functions.CheckMe.checkMe;
 
 public class activity extends AppCompatActivity {
 

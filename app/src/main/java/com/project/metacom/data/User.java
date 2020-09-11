@@ -25,9 +25,8 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-import static com.project.metacom.config.token;
-import static functions.CheckMe.checkMe;
-import static functions.CheckMe.checkMe_dialog;
+import static com.project.metacom.config.me;
+
 
 public class User {
     public String id;
@@ -40,13 +39,13 @@ public class User {
     public List<User_last> user_last = new ArrayList<User_last>();
 
     public void SubscribeMe(String user_id, Context context, user_profile_fragment.DataAdapter data_adapter) {
-        if(!checkMe()){
-            checkMe_dialog(context);
+        if(!me.checkMe()){
+            me.checkMe_dialog(context);
         }else {
             RequestBody requestmBody = RequestBody.create(new byte[0]);
             Request request = new Request.Builder()
                     .url(config.server + "/metacom/users/subscribe/" + user_id)
-                    .addHeader("Authorization", "Bearer " + token)
+                    .addHeader("Authorization", "Bearer " + me.token)
                     .post(requestmBody)
                     .build();
             try {

@@ -1,5 +1,7 @@
 package com.project.metacom;
 
+import com.project.metacom.data.Me;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -16,8 +18,7 @@ import okhttp3.Response;
 public class config {
     public static final String server = "http://109.196.164.38";
     public static final int timeout = 5000;
-    public static String token = "";
-    public static String my_id = "";
+    public static Me me = new Me();
 
     public static final MediaType JSON_HEADER = MediaType.parse("application/json; charset=utf-8");
 

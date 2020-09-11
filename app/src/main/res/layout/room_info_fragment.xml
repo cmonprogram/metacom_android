@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_margin="20dp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/gray_mercury">
+
+    <TableRow
+        android:layout_margin="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+        <TextView
+            style="@style/TextView.Primary.Bold"
+            android:id="@+id/s1"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:labelFor="@+id/edPassword"
+            android:text="Title:" />
+        <TextView
+            android:layout_weight="1"
+            android:id="@+id/s11"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:labelFor="@+id/edPassword"
+            android:text="title text" />
+    </TableRow>
+
+
+    <TableRow
+        android:layout_margin="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+        <TextView
+            style="@style/TextView.Primary.Bold"
+            android:id="@+id/s2"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:labelFor="@+id/edPassword"
+            android:text="Url:" />
+        <TextView
+            android:layout_weight="1"
+            android:autoLink="web"
+            android:id="@+id/s22"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:labelFor="@+id/edPassword"
+            android:text="url text" />
+
+
+    </TableRow>
+
+
+    <Button
+        android:layout_margin="20dp"
+
+        android:id="@+id/button7"
+        android:background="@color/colorAccent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Report" />
+
+</TableLayout>

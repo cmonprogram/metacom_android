@@ -26,7 +26,6 @@ import com.project.metacom.toplist.DataReceiver_toplistitem;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import static functions.CheckMe.checkMe;
 
 public class activity extends AppCompatActivity {
 
@@ -41,7 +40,7 @@ public class activity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setTitle("Top chart");
+        setTitle("Activity");
 
         //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         //getSupportActionBar().setDisplayShowHomeEnabled(true);
@@ -51,30 +50,6 @@ public class activity extends AppCompatActivity {
         // topList_layout.addView(cv);
 
 
-
-
-
-
-
-
-        BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
-        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(MenuItem item) {
-                switch (item.getItemId()) {
-                    case R.id.action_news:
-                        startActivity(new Intent(com.project.metacom.activitylist.activity.this, com.project.metacom.toplist.activity.class));
-                        break;
-                    case R.id.action_activity:
-                        startActivity(new Intent(com.project.metacom.activitylist.activity.this, com.project.metacom.activitylist.activity.class));
-                        break;
-                    case R.id.action_settings:
-                        startActivity(new Intent(com.project.metacom.activitylist.activity.this, com.project.metacom.settings.activity.class));
-                        break;
-                }
-                return true;
-            }
-        });
 
     }
 

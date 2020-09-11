@@ -20,9 +20,10 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.Objects;
 
+import static com.project.metacom.config.me;
 import static com.project.metacom.config.server;
 import static com.project.metacom.config.timeout;
-import static com.project.metacom.config.token;
+
 
 public class DataReceiver_comment extends AsyncTask<String, Integer, Void> {
 
@@ -90,7 +91,7 @@ public class DataReceiver_comment extends AsyncTask<String, Integer, Void> {
             }
 
         ws.sendText("{\"action\": \"room_info\"}");
-        ws.sendText("{\"action\": \"get_history\", \"token\": \""+token+"\"}");
+        ws.sendText("{\"action\": \"get_history\", \"token\": \""+me.token+"\"}");
         return null;
     }
 /*

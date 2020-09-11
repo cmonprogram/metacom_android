@@ -1,19 +1,31 @@
 package com.project.metacom.comments;
 
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.method.LinkMovementMethod;
+import android.view.Gravity;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
+import android.widget.PopupWindow;
+import android.widget.TableLayout;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -26,6 +38,7 @@ import com.project.metacom.R;
 import com.project.metacom.Receiver;
 import com.project.metacom.config;
 import com.project.metacom.data.Comment;
+import com.project.metacom.data.Me;
 import com.project.metacom.data.Room;
 
 import org.json.JSONArray;
@@ -42,11 +55,10 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
+import static com.project.metacom.config.me;
 import static com.project.metacom.config.server;
 import static com.project.metacom.config.timeout;
-import static com.project.metacom.config.token;
-import static functions.CheckMe.checkMe;
-import static functions.CheckMe.checkMe_dialog;
+
 
 public class activity extends AppCompatActivity {
     public DataReceiver_comment data_receiver_comment;
@@ -111,8 +123,8 @@ public class activity extends AppCompatActivity {
                     @Override
                     public void run() {
                         try  {
-                            if(checkMe()) {
-                                data_receiver_comment.ws.sendText("{\"action\": \"post\", \"text\": \"" + v.getText().toString() + "\", \"token\": \"" + token + "\"}");
+                            if(me.checkMe()) {
+                                data_receiver_comment.ws.sendText("{\"action\": \"post\", \"text\": \"" + v.getText().toString() + "\", \"token\": \"" + me.token + "\"}");
                                 handled[0] = true;
                                 runOnUiThread(new Runnable() {
                                     @Override
@@ -121,7 +133,7 @@ public class activity extends AppCompatActivity {
                                     }
                                 });
                             }else{
-                                checkMe_dialog( activity.this);
+                                Me.checkMe_dialog( activity.this);
                                 /*
                                 Intent startIntent = new Intent(activity.this, com.project.metacom.login.activity.class);
                                 startIntent.putExtra("go_to", getIntent().getStringExtra("go_to"));
@@ -169,15 +181,45 @@ public class activity extends AppCompatActivity {
         int id = item.getItemId();
         if (id == android.R.id.home) {
             if(findViewById(R.id.user_profile_conteiner).getVisibility() == View.GONE) {
+                /*
                 Intent startIntent = new Intent(activity.this, com.project.metacom.toplist.activity.class);
                 startActivity(startIntent);
+                */
+                Intent startIntent = new Intent(activity.this, com.project.metacom.ActivityMain.class);
+                startIntent.putExtra("go_to", getIntent().getStringExtra("action_news"));
+                startActivity(startIntent);
+
                 //finish(); // close this activity and return to preview activity (if there is any)
             }
         }
         if (id == R.id.action_goout_comment) {
+
+            Dialog dialog = new Dialog(this, android.R.style.Theme_Translucent_NoTitleBar);
+            //final View emptyDialog = LayoutInflater.from(this).inflate(R.layout.room_info_fragment, null);
+            TableLayout dialog_view = (TableLayout) getLayoutInflater().inflate(R.layout.room_info_fragment, null);
+            TextView v1 = (TextView) dialog_view.findViewById(R.id.s11);
+            v1.setText(room.title);
+            TextView v2 = (TextView) dialog_view.findViewById(R.id.s22);
+            v2.setText(room.url);
+
+            dialog = new AlertDialog.Builder(this)
+                    .setView(dialog_view)
+                    .show();
+            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+
+
+
+            /*
+            LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            PopupWindow pw = new PopupWindow(inflater.inflate(R.layout.room_info_fragment, null, false), LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.WRAP_CONTENT, true);
+            pw.showAtLocation(this.findViewById(R.id.main), Gravity.CENTER, 0, 0);
+            */
+
+            /*
             Intent i = new Intent(Intent.ACTION_VIEW);
             i.setData(Uri.parse(room.url));
             startActivity(i);
+            */
         }
 
         return super.onOptionsItemSelected(item);

@@ -35,7 +35,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 
-import static com.project.metacom.config.token;
+import static com.project.metacom.config.me;
+
 
 public class DataAdapter extends RecyclerView.Adapter<DataAdapter.DataAdapterViewHolder> {
     public List<Comment> CommentBase = new ArrayList<Comment>();
@@ -146,7 +147,7 @@ public class DataAdapter extends RecyclerView.Adapter<DataAdapter.DataAdapterVie
             View.OnClickListener like_event = new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    context.data_receiver_comment.ws.sendText("{\"action\": \"like\", \"post_id\": \"" + comment.id + "\", \"token\": \"" + token + "\"}");
+                    context.data_receiver_comment.ws.sendText("{\"action\": \"like\", \"post_id\": \"" + comment.id + "\", \"token\": \"" + me.token + "\"}");
 
                     AlphaAnimation animation = new AlphaAnimation(0f, 1.0f);
                     animation.setDuration(500);
@@ -158,7 +159,7 @@ public class DataAdapter extends RecyclerView.Adapter<DataAdapter.DataAdapterVie
             View.OnClickListener dislike_event = new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    context.data_receiver_comment.ws.sendText("{\"action\": \"dislike\", \"post_id\": \"" + comment.id + "\", \"token\": \"" + token + "\"}");
+                    context.data_receiver_comment.ws.sendText("{\"action\": \"dislike\", \"post_id\": \"" + comment.id + "\", \"token\": \"" + me.token + "\"}");
 
                     AlphaAnimation animation = new AlphaAnimation(0f, 1.0f);
                     animation.setDuration(500);

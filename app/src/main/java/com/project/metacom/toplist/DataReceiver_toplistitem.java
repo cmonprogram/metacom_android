@@ -21,7 +21,8 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-import static com.project.metacom.config.my_id;
+import static com.project.metacom.config.me;
+
 
 public class DataReceiver_toplistitem {
 
@@ -48,8 +49,8 @@ public class DataReceiver_toplistitem {
     }
 
     public class my{
-        private String url_get = "/metacom/get_last/" + my_id;
-        private String url_search = "/metacom/room_search/" + my_id;
+        private String url_get = "/metacom/get_last/" + me.user.id;
+        private String url_search = "/metacom/room_search/" + me.user.id;
         public void get() throws IOException {
             reset();
             post_func(url_get);

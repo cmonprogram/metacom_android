@@ -18,16 +18,16 @@
                 android:padding="8dp">
 
                 <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/user_image_view"
+                    android:id="@+id/activity_image_view"
                     android:layout_width="44dp"
                     android:layout_height="44dp"
                     android:src="@mipmap/ic_launcher"/>
                 <RelativeLayout
-                    android:id="@+id/commentRelativeLayout1"
+                    android:id="@+id/activityRelativeLayout1"
                     android:layout_width="match_parent"
                     android:layout_height="64dp"
-                    android:layout_marginLeft="8dp"
-                    android:layout_toRightOf="@+id/user_image_view">
+                    android:layout_marginStart="8dp"
+                    android:layout_toEndOf="@+id/activity_image_view">
                     <TextView
                         android:id="@+id/user_name_text_view"
                         style="@style/TextView.Primary.Bold"

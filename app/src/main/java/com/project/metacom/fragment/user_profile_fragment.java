@@ -96,7 +96,11 @@ public class user_profile_fragment extends Fragment {
                                             Thread thread = new Thread(new Runnable(){
                                                 @Override
                                                 public void run() {
-                                                    user.SubscribeMe(user.id, context, data_adapter);
+                                                    context.runOnUiThread(new Runnable() {
+                                                        @Override
+                                                        public void run() {
+                                                            user.SubscribeMe(user.id, context, data_adapter);
+                                                        }});
                                                 }
                                             });
                                             thread.start();
