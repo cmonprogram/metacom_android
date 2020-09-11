@@ -145,4 +145,47 @@ public class User {
         }
         return this;
     }
+
+    public class User_last {
+        public String chat_room;
+        public String id;
+        public String count;
+        public String time;
+        public String title;
+        public String url;
+        public Bitmap icon;
+
+        public User_last fromJson(JSONObject oneObject) {
+            this.chat_room = oneObject.optString("chat_room");
+            this.id = oneObject.optString("id");
+            this.count = oneObject.optString("count");
+            this.time = oneObject.optString("time");
+            this.title = oneObject.optString("title");
+            this.url = oneObject.optString("url");
+
+            String encoded_image = oneObject.optString("icon");
+            if (encoded_image != null) {
+                byte[] decodedString_image = Base64.decode(encoded_image, Base64.DEFAULT);
+                Bitmap decodedByte_image = BitmapFactory.decodeByteArray(decodedString_image, 0, decodedString_image.length);
+                this.icon = decodedByte_image;
+            }
+            return this;
+        }
+    }
+
+    public class User_stats {
+        public String comment_sum;
+        public String like_sum;
+        public String dislike_sum;
+
+
+        public User_stats fromJson(JSONObject oneObject) {
+            this.comment_sum = oneObject.optString("comment_sum");
+            this.like_sum = oneObject.optString("like_sum");
+            if(this.like_sum == "null"){this.like_sum = "0";}
+            this.dislike_sum = oneObject.optString("dislike_sum");
+            if(this.dislike_sum == "null"){this.dislike_sum = "0";}
+            return this;
+        }
+    }
 }

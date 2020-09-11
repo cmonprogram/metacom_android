@@ -6,30 +6,19 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.ProgressBar;
-import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.material.tabs.TabLayout;
 import com.project.metacom.R;
-import com.project.metacom.Receiver;
 import com.project.metacom.data.User;
-import com.project.metacom.data.User_last;
-import com.project.metacom.data.User_stats;
-import com.project.metacom.fragment.user_profile_fragment;
 
 
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
-
-import de.hdodenhof.circleimageview.CircleImageView;
 
 import static com.project.metacom.config.me;
 
@@ -37,8 +26,6 @@ import static com.project.metacom.config.me;
 public class fragment extends Fragment {
     private AppCompatActivity context;
 
-    private DataAdapter_activity da;
-    private DataReceiver_activity dr;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -55,8 +42,8 @@ public class fragment extends Fragment {
             public void run() {
                 try  {
                     // Data init place
-                    da = new DataAdapter_activity(context,new ArrayList<User_last>());
-                    //dr = new DataReceiver_activity(da);
+                    DataAdapter_activity da = new DataAdapter_activity(context, new ArrayList<User.User_last>());
+                    //DataReceiver_activity dr = new DataReceiver_activity(da);
 
                     context.runOnUiThread(new Runnable() {
                         @Override

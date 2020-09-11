@@ -22,8 +22,6 @@ import androidx.fragment.app.Fragment;
 import com.project.metacom.R;
 import com.project.metacom.Receiver;
 import com.project.metacom.data.User;
-import com.project.metacom.data.User_last;
-import com.project.metacom.data.User_stats;
 
 import java.util.List;
 
@@ -52,9 +50,9 @@ public class user_profile_fragment extends Fragment {
             public void run() {
                 try  {
                     final User user = Receiver.data_receiver_user.check(user_id);
-                    final User_stats user_stats = user.get_stats();
+                    final User.User_stats user_stats = user.get_stats();
                     final ListView data_target = (ListView) view.findViewById(R.id.user_explist_view);
-                    final List<User_last> user_last = user.get_last();
+                    final List<User.User_last> user_last = user.get_last();
                     data_adapter = new DataAdapter(context, user_last);
                     // Inflate the layout for this fragment
                     context.runOnUiThread(new Runnable() {
@@ -126,7 +124,7 @@ public class user_profile_fragment extends Fragment {
 
     public class DataAdapter extends ArrayAdapter {
 
-        public DataAdapter(Context context,List<User_last> array) {
+        public DataAdapter(Context context,List<User.User_last> array) {
             super(context, 0, array);
         }
 
@@ -134,7 +132,7 @@ public class user_profile_fragment extends Fragment {
         public View getView(int position, View convertView, ViewGroup parent) {
 
             // Get the data item for this position
-            User_last obj = (User_last)getItem(position);
+            User.User_last obj = (User.User_last)getItem(position);
             // Check if an existing view is being reused, otherwise inflate the view
             if (convertView == null) {
                 LayoutInflater infalInflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);

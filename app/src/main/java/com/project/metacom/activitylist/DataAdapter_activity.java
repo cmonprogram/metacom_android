@@ -8,7 +8,7 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.project.metacom.R;
-import com.project.metacom.data.User_last;
+import com.project.metacom.data.User;
 
 import java.util.List;
 
@@ -16,7 +16,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class DataAdapter_activity extends ArrayAdapter {
 
-        public DataAdapter_activity(Context context, List<User_last> array) {
+        public DataAdapter_activity(Context context, List<User.User_last> array) {
             super(context, 0, array);
         }
 
@@ -24,7 +24,7 @@ public class DataAdapter_activity extends ArrayAdapter {
         public View getView(int position, View convertView, ViewGroup parent) {
 
             // Get the data item for this position
-            User_last obj = (User_last)getItem(position);
+            User.User_last obj = (User.User_last)getItem(position);
             // Check if an existing view is being reused, otherwise inflate the view
             if (convertView == null) {
                 LayoutInflater infalInflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
