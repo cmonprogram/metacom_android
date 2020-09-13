@@ -19,6 +19,7 @@ import com.project.metacom.data.User;
 
 
 import java.util.ArrayList;
+import java.util.List;
 
 import static com.project.metacom.config.me;
 
@@ -42,7 +43,9 @@ public class fragment extends Fragment {
             public void run() {
                 try  {
                     // Data init place
-                    DataAdapter_activity da = new DataAdapter_activity(context, new ArrayList<User.User_last>());
+                    List<User.User_last> activity_last = me.get_last_activity();
+                    final DataAdapter_activity activity_last_da = new DataAdapter_activity(context, activity_last);
+
                     //DataReceiver_activity dr = new DataReceiver_activity(da);
 
                     context.runOnUiThread(new Runnable() {
@@ -65,6 +68,8 @@ public class fragment extends Fragment {
                                     startActivity(startIntent);
                                 }
                             });
+
+                            data_target.setAdapter(activity_last_da);
                             /*
                             data_target.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -78,7 +83,7 @@ public class fragment extends Fragment {
 
                                 }
                             });
-                            data_target.setAdapter(da);
+
                             */
 
                             Thread thread = new Thread(new Runnable() {
@@ -103,10 +108,19 @@ public class fragment extends Fragment {
                                                         //viewPager.setCurrentItem(tab.getPosition());//setting current selected item over viewpager
                                                         switch (tab.getPosition()) {
                                                             case ACTIVITY_TAB:
+                                                                List<User.User_last> activity_last = me.get_last_activity();
+                                                                final DataAdapter_activity activity_last_da = new DataAdapter_activity(context, activity_last);
+                                                                data_target.setAdapter(activity_last_da);
                                                                 break;
                                                             case SUBSCRIPTIONS_TAB:
+                                                                final List<User> subscriptions_last = me.get_last_subscriptions();;
+                                                                final DataAdapter_users subscriptions_last_da = new DataAdapter_users(context, subscriptions_last);
+                                                                data_target.setAdapter(subscriptions_last_da);
                                                                 break;
                                                             case USERS_TAB:
+                                                                final List<User> users_last = me.get_last_users();
+                                                                final DataAdapter_users users_last_da = new DataAdapter_users(context, users_last);
+                                                                data_target.setAdapter(users_last_da);
                                                                 break;
                                                         }
                                                     }

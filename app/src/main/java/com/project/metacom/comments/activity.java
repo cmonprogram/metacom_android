@@ -61,9 +61,8 @@ import static com.project.metacom.config.timeout;
 
 
 public class activity extends AppCompatActivity {
-    public DataReceiver_comment data_receiver_comment;
-    public DataReceiver_user data_receiver_user;
     public Room room;
+    public DataReceiver_comment data_receiver_comment;
     public void set_room(final Room room){
         this.room = room;
         this.runOnUiThread(new Runnable() {
@@ -100,10 +99,7 @@ public class activity extends AppCompatActivity {
 
         data_receiver_comment = new DataReceiver_comment(data_adapter);
         data_receiver_comment.execute(getIntent().getStringExtra("go_to"));
-        data_receiver_user = data_receiver_comment.data_receiver_user;
 
-        Receiver.data_receiver_comment = data_receiver_comment;
-        Receiver.data_receiver_user = data_receiver_user;
 
         data_target.setAdapter(data_adapter);
 

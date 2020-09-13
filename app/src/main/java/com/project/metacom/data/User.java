@@ -26,6 +26,7 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 import static com.project.metacom.config.me;
+import static functions.MakeRequest.MakeRequest;
 
 
 public class User {
@@ -36,7 +37,6 @@ public class User {
     public String joined;
     public String subscriptions;
     private User_stats user_stats;
-    public List<User_last> user_last = new ArrayList<User_last>();
 
     public void SubscribeMe(String user_id, Context context, user_profile_fragment.DataAdapter data_adapter) {
         if(!me.checkMe()){
@@ -44,20 +44,20 @@ public class User {
         }else {
             RequestBody requestmBody = RequestBody.create(new byte[0]);
             Request request = new Request.Builder()
-                    .url(config.server + "/metacom/users/subscribe/" + user_id)
+                    .url(config.server + "/metacom/me/subscribe/" + user_id)
                     .addHeader("Authorization", "Bearer " + me.token)
                     .post(requestmBody)
                     .build();
             try {
-                Response response = new OkHttpClient().newCall(request).execute();
-                if (response.code() == 200) {
-                    Toast.makeText(context, "Success", Toast.LENGTH_LONG);
-                    this.subscriptions = String.valueOf(Integer.parseInt(subscriptions) + 1);
-                    data_adapter.notifyDataSetChanged();
-                }
-            } catch (IOException e) {
+                String result = MakeRequest(request);
+                Toast.makeText(context, "Success", Toast.LENGTH_LONG);
+                this.subscriptions = String.valueOf(Integer.parseInt(subscriptions) + 1);
+                data_adapter.notifyDataSetChanged();
+
+            } catch (Exception e) {
                 e.printStackTrace();
             }
+
         }
     }
 
@@ -71,56 +71,54 @@ public class User {
                     .url(config.server + "/metacom/user_stats/" + id)
                     .post(requestmBody)
                     .build();
+
             try {
-                Response response = new OkHttpClient().newCall(request).execute();
-                String result = response.body().string();
+                String result = MakeRequest(request);
+                assert result != null;
                 JSONObject json = null;
                 JSONArray jArray = null;
-                try {
-                    json = new JSONObject(result);
-                    user_stats = new User_stats().fromJson(json);
-                    return user_stats;
-                    // localStorage.setItem('meta_chat_self_id', response.id);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            } catch (IOException e) {
+
+                json = new JSONObject(result);
+                user_stats = new User_stats().fromJson(json);
+                return user_stats;
+                // localStorage.setItem('meta_chat_self_id', response.id);
+
+            } catch (Exception e) {
                 e.printStackTrace();
             }
+
+
         }
         return user_stats;
     }
 
     public List<User_last> get_last() {
-
+        List<User_last> user_last = new ArrayList<User_last>();
         RequestBody requestmBody = RequestBody.create(new byte[0]);
         Request request = new Request.Builder()
                 .url(config.server + "/metacom/get_last/" + id)
                 .post(requestmBody)
                 .build();
         try {
-            Response response = new OkHttpClient().newCall(request).execute();
-            String result = response.body().string();
+            String result = MakeRequest(request);
+            assert result != null;
             JSONObject json = null;
             JSONArray jArray = null;
-            try {
 
-                jArray = new JSONArray(result);
-                for (int i = 0; i < jArray.length(); i++) {
-                    JSONObject oneObject = jArray.getJSONObject(i);
-                    final User_last user_last_obj = new User_last().fromJson(oneObject);
-                    user_last.add(user_last_obj);
-                }
-
-                return user_last;
-                // localStorage.setItem('meta_chat_self_id', response.id);
-
-            } catch (JSONException e) {
-                e.printStackTrace();
+            jArray = new JSONArray(result);
+            for (int i = 0; i < jArray.length(); i++) {
+                JSONObject oneObject = jArray.getJSONObject(i);
+                final User_last user_last_obj = new User_last().fromJson(oneObject);
+                user_last.add(user_last_obj);
             }
-        } catch (IOException e) {
+            return user_last;
+            // localStorage.setItem('meta_chat_self_id', response.id);
+
+        } catch (Exception e) {
             e.printStackTrace();
         }
+
+
 
         return user_last;
     }
@@ -146,9 +144,10 @@ public class User {
         return this;
     }
 
-    public class User_last {
+    public static class User_last {
         public String chat_room;
         public String id;
+        public String user_id;
         public String count;
         public String time;
         public String title;
@@ -158,10 +157,17 @@ public class User {
         public User_last fromJson(JSONObject oneObject) {
             this.chat_room = oneObject.optString("chat_room");
             this.id = oneObject.optString("id");
+            this.user_id = oneObject.optString("user_id");
             this.count = oneObject.optString("count");
-            this.time = oneObject.optString("time");
             this.title = oneObject.optString("title");
             this.url = oneObject.optString("url");
+
+            long timeStamp = (int) Double.parseDouble(oneObject.optString("time"));
+            Date date = new Date(timeStamp * 1000L);
+            SimpleDateFormat sdf = new SimpleDateFormat("d MMMM yyyy");
+            sdf.setTimeZone(TimeZone.getDefault());
+            String formattedDate = sdf.format(date);
+            this.time = formattedDate;
 
             String encoded_image = oneObject.optString("icon");
             if (encoded_image != null) {
@@ -173,7 +179,7 @@ public class User {
         }
     }
 
-    public class User_stats {
+    public static class User_stats {
         public String comment_sum;
         public String like_sum;
         public String dislike_sum;
@@ -182,9 +188,9 @@ public class User {
         public User_stats fromJson(JSONObject oneObject) {
             this.comment_sum = oneObject.optString("comment_sum");
             this.like_sum = oneObject.optString("like_sum");
-            if(this.like_sum == "null"){this.like_sum = "0";}
+            if(this.like_sum.equals("null")){this.like_sum = "0";}
             this.dislike_sum = oneObject.optString("dislike_sum");
-            if(this.dislike_sum == "null"){this.dislike_sum = "0";}
+            if(this.dislike_sum.equals("null")){this.dislike_sum = "0";}
             return this;
         }
     }

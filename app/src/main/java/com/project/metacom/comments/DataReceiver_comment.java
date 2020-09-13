@@ -8,6 +8,7 @@ import com.neovisionaries.ws.client.WebSocketAdapter;
 import com.neovisionaries.ws.client.WebSocketException;
 import com.neovisionaries.ws.client.WebSocketExtension;
 import com.neovisionaries.ws.client.WebSocketFactory;
+import com.project.metacom.Receiver;
 import com.project.metacom.data.Comment;
 import com.project.metacom.data.Room;
 import com.project.metacom.data.User;
@@ -28,12 +29,10 @@ import static com.project.metacom.config.timeout;
 public class DataReceiver_comment extends AsyncTask<String, Integer, Void> {
 
     DataAdapter data_adapter;
-    DataReceiver_user data_receiver_user;
     public WebSocket ws;
     public Room room;
     public DataReceiver_comment(DataAdapter data_adapter){
         this.data_adapter = data_adapter;
-        this.data_receiver_user = new DataReceiver_user(data_adapter);
     }
 
 
@@ -61,13 +60,13 @@ public class DataReceiver_comment extends AsyncTask<String, Integer, Void> {
                                     for (int i = 0; i < jArray.length(); i++) {
                                         JSONObject oneObject = jArray.getJSONObject(i);
                                         final Comment comment = new Comment().fromJson(oneObject);
-                                        comment.user = data_receiver_user.check(comment.user_id);
+                                        comment.user = Receiver.data_receiver_user.check(comment.user_id);
                                         add_comment(comment, null);
                                     }
                                 }else if(Objects.equals(action, "post")){
                                         json = new JSONObject(message);
                                         final Comment comment = new Comment().fromJson(json);
-                                        comment.user = data_receiver_user.check(comment.user_id);
+                                        comment.user = Receiver.data_receiver_user.check(comment.user_id);
                                         add_comment(comment,0);
                                 }else if(Objects.equals(action, "like")){
                                     json = new JSONObject(message);

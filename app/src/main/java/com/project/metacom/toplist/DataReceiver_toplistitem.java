@@ -22,6 +22,7 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 import static com.project.metacom.config.me;
+import static functions.MakeRequest.MakeRequest;
 
 
 public class DataReceiver_toplistitem {
@@ -78,39 +79,31 @@ public class DataReceiver_toplistitem {
         Request request = new Request.Builder()
                 .url(config.server + url)
                 .build();
+        try {
+        String result = MakeRequest(request);
+        assert result != null;
+        JSONObject json = null;
+        JSONArray jArray = null;
 
-        new OkHttpClient().newCall(request)
-                .enqueue(new Callback() {
+            //json = new JSONObject(result);
+            jArray = new JSONArray(result);
+            for (int i=0; i < jArray.length(); i++)
+            {
+                JSONObject oneObject = jArray.getJSONObject(i);
+                final TopListItem data = new TopListItem().fromJson(oneObject);
+                Activity a = (Activity)data_adapter.getContext();
+                a.runOnUiThread(new Runnable() {
                     @Override
-                    public void onFailure(final Call call, IOException e) {
-                        // Error
-                    }
-
-                    @Override
-                    public void onResponse(Call call, final Response response) throws IOException {
-                        String result = response.body().string();
-                        JSONObject json = null;
-                        JSONArray jArray = null;
-                        try {
-                            //json = new JSONObject(result);
-                            jArray = new JSONArray(result);
-                            for (int i=0; i < jArray.length(); i++)
-                            {
-                                JSONObject oneObject = jArray.getJSONObject(i);
-                                final TopListItem data = new TopListItem().fromJson(oneObject);
-                                Activity a = (Activity)data_adapter.getContext();
-                                a.runOnUiThread(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        data_adapter.add(data);
-                                        data_adapter.notifyDataSetChanged(); }
-                                });
-                            }
-                        } catch (JSONException e) {
-                            // Oops
-                        }
-                    }
+                    public void run() {
+                        data_adapter.add(data);
+                        data_adapter.notifyDataSetChanged(); }
                 });
+            }
+
+        } catch (Exception e) {
+            // Oops
+        }
+
     }
 
     public void post_func(String url) throws IOException {
@@ -121,37 +114,31 @@ public class DataReceiver_toplistitem {
                 .post(requestmBody)
                 .build();
 
-        new OkHttpClient().newCall(request)
-                .enqueue(new Callback() {
-                    @Override
-                    public void onFailure(final Call call, IOException e) {
-                        // Error
-                    }
+        try {
+            String result = MakeRequest(request);
+            assert result != null;
+            JSONObject json = null;
+            JSONArray jArray = null;
 
+            //json = new JSONObject(result);
+            jArray = new JSONArray(result);
+            for (int i=0; i < jArray.length(); i++)
+            {
+                JSONObject oneObject = jArray.getJSONObject(i);
+                final TopListItem data = new TopListItem().fromJson(oneObject);
+                Activity a = (Activity)data_adapter.getContext();
+                a.runOnUiThread(new Runnable() {
                     @Override
-                    public void onResponse(Call call, final Response response) throws IOException {
-                        String result = response.body().string();
-                        JSONObject json = null;
-                        JSONArray jArray = null;
-                        try {
-                            //json = new JSONObject(result);
-                            jArray = new JSONArray(result);
-                            for (int i=0; i < jArray.length(); i++)
-                            {
-                                JSONObject oneObject = jArray.getJSONObject(i);
-                                final TopListItem data = new TopListItem().fromJson(oneObject);
-                                Activity a = (Activity)data_adapter.getContext();
-                                a.runOnUiThread(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        data_adapter.add(data);
-                                        data_adapter.notifyDataSetChanged(); }
-                                });
-                            }
-                        } catch (JSONException e) {
-                            // Oops
-                        }
-                    }
+                    public void run() {
+                        data_adapter.add(data);
+                        data_adapter.notifyDataSetChanged(); }
                 });
+            }
+
+        } catch (Exception e) {
+            // Oops
+        }
+
+
     }
 }

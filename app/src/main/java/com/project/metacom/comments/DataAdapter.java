@@ -40,7 +40,7 @@ import static com.project.metacom.config.me;
 
 public class DataAdapter extends RecyclerView.Adapter<DataAdapter.DataAdapterViewHolder> {
     public List<Comment> CommentBase = new ArrayList<Comment>();
-    public List<User> UserBase = new ArrayList<User>();
+    //public List<User> UserBase = new ArrayList<User>();
     private activity context;
 
     DataAdapter(activity context){

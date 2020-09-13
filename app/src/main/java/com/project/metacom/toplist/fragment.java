@@ -12,7 +12,6 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
@@ -21,9 +20,6 @@ import androidx.fragment.app.Fragment;
 import com.google.android.material.tabs.TabLayout;
 import com.project.metacom.R;
 import com.project.metacom.data.TopListItem;
-import com.project.metacom.toplist.DataAdapter;
-import com.project.metacom.toplist.DataReceiver_toplistitem;
-import com.project.metacom.toplist.activity;
 
 import java.io.IOException;
 import java.util.ArrayList;
